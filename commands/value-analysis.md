@@ -1,0 +1,35 @@
+---
+name: /value-analysis
+id: value-analysis
+category: Investing
+description: 触发「价值投资分析」skill，对指定公司做 right business/people/price 三要素 + 五维度 + 市场现状分析
+argument-hint: [公司名或代码，如 贵州茅台 / 600519.SH / 泡泡玛特 09992.HK]
+---
+
+# 价值投资分析 (/value-analysis)
+
+触发 `价值投资分析` skill，对 `$ARGUMENTS` 指定的公司执行七步价值分析。
+
+## 必须做的事
+
+1. **立即读取并遵循** `价值投资分析` skill 的 `SKILL.md`：
+   - 项目级：`.claude/skills/价值投资分析/SKILL.md` 或 `.cursor/skills-cursor/价值投资分析/SKILL.md`
+   - 全局：`~/.claude/skills/价值投资分析/SKILL.md`（或对应 Agent 的 skills 目录）
+2. 按 skill 的**七步流程**分析 `$ARGUMENTS`：看懂生意 → 市场现状分析 → Right Business → Right People → Right Price → 可持续性 → 综合结论。
+3. **第二步「市场现状分析」**用 Tushare 兼容 MCP（`tushareMcp`）拉取最近股价、财报三大表、财务指标、估值、分红、公告等；接口权限不足时降级并标注（见 `references/mcp-tool-guide.md`）。
+4. 分析前检查 `references/companies/` 是否已收录该公司；已收录则加载其理解作为参照（不照搬结论）。
+5. 输出结构化结论：市场现状快照 + 三要素判断 + 五维度评分 + 核心风险 + 最终判断。
+
+## 使用方法
+
+```text
+/value-analysis 贵州茅台
+/value-analysis 600519.SH
+/value-analysis 泡泡玛特 09992.HK
+```
+
+## 不要做的事
+
+- 不构成投资建议；MCP 数据仅供参考。
+- 看不懂的生意可以 skip，不勉强给结论。
+- 不将一家公司的结论机械套用到另一家。
