@@ -6,8 +6,8 @@
 
 | Skill | 说明 | 外部依赖 |
 |-------|------|----------|
-| [`价值投资`](skills/价值投资/SKILL.md) | 基于段永平/巴菲特理念的企业价值分析模型（right business/people/price 三要素 + 五维度 + 四种好运），并通过金融数据 MCP 补充市场现状（股价/财报/估值/公告/宏观） | 优先 `tdx`，缺失/失败再用 `tushareMcp` 补充——见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md) |
-| [`股票魔法师`](skills/股票魔法师/SKILL.md) | 基于 SEPA / Mark Minervini 方法的中短线交易分析，判断趋势模板、VCP、中枢点、止损、仓位与卖出信号 | A 股优先 `tdx`，失败降级 `tushareMcp` |
+| [`价值投资`](skills/价值投资/SKILL.md) | 基于段永平/巴菲特理念的企业价值分析模型（right business/people/price 三要素 + 五维度 + 四种好运），并通过同花顺问财补充市场现状（股价/估值/财报口径/行业板块/资金流） | 统一使用 `iwencai` / `hithink-*` skills——见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md) |
+| [`股票魔法师`](skills/股票魔法师/SKILL.md) | 基于 SEPA / Mark Minervini 方法的中短线交易分析，判断趋势模板、VCP、中枢点、止损、仓位与卖出信号 | 统一使用 `hithink-market-query` + 行业/板块问财 skills |
 | [`股票比较`](skills/股票比较/SKILL.md) | 综合 `价值投资` 与 `股票魔法师`，对多只股票做机会成本排序，并输出买入、持有、减仓、卖出或换仓计划 | 同上 |
 
 ## 斜杠命令 /command
@@ -107,13 +107,14 @@ opc/
 |------|------|
 | `-t, --target <name>` | 预设目标：`claude` / `codex` / `cursor` / `agents` / `all` |
 | `-l, --link` | 用软链接代替复制（源仓库更新后免重装） |
-| `-f, --force` | 覆盖已存在的同名 skill / command（默认跳过） |
+| `-f, --force` | 覆盖已存在的同名 skill / command（复制模式默认跳过） |
+| `--no-force` | 软链接模式下仍跳过已存在项（覆盖 `--link` 的默认覆盖行为） |
 | `-n, --dry-run` | 只打印将要执行的操作 |
 | `--no-commands` | 只装 skills，不装 /command |
 | `--commands-only` | 只装 /command，不装 skills |
 | `DEST_DIR` | 自定义 skills 目录（仅装 skills；命令目录因 Agent 而异，故不装命令） |
 
-**复制 vs 软链接**：日常使用推荐**复制**（稳定、可离线）；若你在持续修改本仓库的 skill/命令，用 `--link` 让改动即时生效。
+**复制 vs 软链接**：日常使用推荐**复制**（稳定、可离线）；若你在持续修改本仓库的 skill/命令，用 `--link` 让改动即时生效（`--link` 默认覆盖已存在项，可用 `--no-force` 改为跳过）。
 
 ---
 
@@ -140,39 +141,31 @@ rm -f  ~/.claude/commands/价值投资.md
 
 ---
 
-## 依赖说明：金融数据 MCP 选型
+## 依赖说明：同花顺问财 Skills
 
 推荐组合：
 
-| MCP | 用途 | 结论 |
+| Skill | 用途 | 结论 |
 |-----|------|------|
-| `tdx`（通达信 MCP） | A 股行情、盘口、竞价、板块、技术指标、可用 F10/财务数据 | 默认优先源；先查它 |
-| `tushareMcp` | A 股/港股/美股日线、财报、估值、公告、宏观 | 补充源；`tdx` 没有、失败或字段不足时使用 |
-| 通达信官方 / OpenClaw 插件 | 官方 Token、F10、智能选股、更多通达信数据 | 有官方 Token 或重度投研时再接 |
+| `hithink-market-query` | 个股 / ETF / 指数行情、涨跌幅、成交量、资金流、技术指标 | 个股与指数默认入口 |
+| `hithink-industry-query` | 行业估值、盈利、财务、行情、排名 | 行业层数据默认入口 |
+| `hithink-sector-selector` | 板块筛选、资金流、涨跌幅、估值 | 板块和主题环境默认入口 |
+| `hithink-hkstock-selector` | 港股筛选、港股行情与财务类条件组合 | 港股默认入口 |
 
-免费 `tdx` MCP 可用 `tdx-mcp`：
+推荐先安装 Iwencai SkillHub CLI，再安装以上 skills。例如在 Codex：
 
-```json
-{
-  "mcpServers": {
-    "tdx": {
-      "command": "uvx",
-      "args": ["--from", "tdx-mcp", "tdx-mcp"]
-    }
-  }
-}
+```bash
+iwencai-skillhub-cli --dir ~/.codex/skills install hithink-market-query
+iwencai-skillhub-cli --dir ~/.codex/skills install hithink-industry-query
+iwencai-skillhub-cli --dir ~/.codex/skills install hithink-sector-selector
+iwencai-skillhub-cli --dir ~/.codex/skills install hithink-hkstock-selector
 ```
 
-同时建议配置 **Tushare 兼容 MCP** 作为补充源。在 `~/.cursor/mcp.json`（或对应 Agent 的 MCP 配置）中加入：
+并在 shell profile 中配置：
 
-```json
-{
-  "mcpServers": {
-    "tushareMcp": {
-      "url": "https://ts.gyzcloud.top/mcp/token=你的_Tushare_Token"
-    }
-  }
-}
+```bash
+export IWENCAI_BASE_URL="https://openapi.iwencai.com"
+export IWENCAI_API_KEY="你的_IWENCAI_API_KEY"
 ```
 
-SDK/HTTP 直连使用 `https://ts.gyzcloud.top/api`（Tushare 标准 POST/SDK 入口），Token 到期或套餐变化时更新 MCP URL。工具清单与查询模式详见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md)。
+工具清单、问句改写规则与数据时效校验见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md)。

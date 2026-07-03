@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A股存储行业价值筛选 - 2026-07-03</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --panel: #fffdf8;
+      --ink: #1f2933;
+      --muted: #5f6c7b;
+      --line: #d8d0c2;
+      --accent: #0f766e;
+      --warn: #b45309;
+      --risk: #b42318;
+      --good: #166534;
+      --chip: #e8f3f1;
+      --chip-warn: #fff4e5;
+      --chip-risk: #fdecec;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.08), transparent 28%),
+        radial-gradient(circle at top left, rgba(180, 83, 9, 0.07), transparent 25%),
+        var(--bg);
+      color: var(--ink);
+      font: 15px/1.55 "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+    }
+
+    .wrap {
+      width: min(1200px, calc(100vw - 32px));
+      margin: 28px auto 48px;
+    }
+
+    .hero, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(31, 41, 51, 0.06);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 { margin: 0 0 10px; line-height: 1.2; }
+    h1 { font-size: 34px; letter-spacing: -0.03em; }
+    h2 { font-size: 21px; margin-bottom: 14px; }
+    h3 { font-size: 17px; }
+
+    p { margin: 0 0 10px; }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .span-12 { grid-column: span 12; }
+    .span-8 { grid-column: span 8; }
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+
+    .card { padding: 22px; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .chip.warn { background: var(--chip-warn); color: var(--warn); }
+    .chip.risk { background: var(--chip-risk); color: var(--risk); }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .summary .box {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .summary .k { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .summary .v { font-size: 26px; font-weight: 700; margin-top: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag.good { background: #e7f6ec; color: var(--good); }
+    .tag.watch { background: #edf5ff; color: #145da0; }
+    .tag.warn { background: #fff4e5; color: var(--warn); }
+    .tag.risk { background: #fdecec; color: var(--risk); }
+
+    .score {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 48px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bar {
+      height: 10px;
+      background: #eee7da;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #0f766e, #0ea5a4);
+    }
+
+    .note, .risk-box {
+      border-left: 4px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #fff8ef;
+      color: #6b4e16;
+    }
+
+    .risk-box {
+      border-left-color: var(--risk);
+      background: #fff2f2;
+      color: #7a1b1b;
+    }
+
+    .decision {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .decision .box {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .decision .box h3 { margin-bottom: 8px; }
+
+    .small { font-size: 13px; }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 900px) {
+      .span-8, .span-6, .span-4 { grid-column: span 12; }
+      .summary, .decision { grid-template-columns: 1fr; }
+      .score-row { grid-template-columns: 94px 1fr 42px; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>A股存储行业价值筛选</h1>
+      <p class="muted">分析目标：在 A 股存储行业里，找出“生意还行、价格不算离谱、但不是单纯追涨”的候选公司。</p>
+      <div class="chips">
+        <span class="chip">分析基准日 2026-07-03</span>
+        <span class="chip">行情截止 20260703</span>
+        <span class="chip">财报报告期 20260331</span>
+        <span class="chip warn">MCP 拉取时间 2026-07-03 15:33 CST</span>
+        <span class="chip risk">结论偏向“相对低估”，不是深度价值底部</span>
+      </div>
+      <div class="summary">
+        <div class="box">
+          <div class="k">最优综合候选</div>
+          <div class="v">江波龙</div>
+          <div class="small muted">生意质量最好，品牌、渠道、产品矩阵更完整</div>
+        </div>
+        <div class="box">
+          <div class="k">最便宜的弹性票</div>
+          <div class="v">德明利</div>
+          <div class="small muted">按 2026Q1 年化利润重算，估值最低，但周期和库存风险最大</div>
+        </div>
+        <div class="box">
+          <div class="k">AI 端侧受益最强</div>
+          <div class="v">佰维存储</div>
+          <div class="small muted">AI 穿戴和 ePOP 逻辑最清晰，但现金流和杠杆约束明显</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card span-12">
+        <h2>结论先行</h2>
+        <p><strong>严格意义上，这个板块当前没有“又便宜又在底部”的票。</strong> 但如果把“低估”定义为 <strong>当前股价对 2026 年景气盈利的定价仍不算夸张</strong>，那么最接近这个标准的是 <strong>江波龙、德明利、佰维存储</strong>。</p>
+        <p>它们的共同点是：TTM PE 仍在 48-51 倍附近，看上去不便宜；但按 2026Q1 利润简单年化重算，隐含 PE 已降到 <strong>15-17 倍</strong>。问题在于，这一利润高点很大程度来自 <strong>DRAM / NAND 价格上行周期</strong>，而不是纯粹的长期护城河兑现。</p>
+        <div class="note small">
+          价值投资角度：只能接受“景气上行中的相对低估”，不能把它们当成传统意义的深度价值股。
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <h2>市场现状快照</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>公司</th>
+              <th>现价</th>
+              <th>TTM PE</th>
+              <th>PB</th>
+              <th>年化Q1 PE</th>
+              <th>2026Q1 营收/归母净利</th>
+              <th>2026Q1 经营现金流</th>
+              <th>52周位置</th>
+              <th>初筛</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>江波龙 301308.SZ</td>
+              <td>618.02</td>
+              <td>48.1</td>
+              <td>21.5</td>
+              <td>16.9</td>
+              <td>99.09 亿 / 38.62 亿</td>
+              <td>-28.75 亿</td>
+              <td>较52周高点低 17.1%</td>
+              <td><span class="tag good">进入候选</span></td>
+            </tr>
+            <tr>
+              <td>德明利 001309.SZ</td>
+              <td>881.91</td>
+              <td>48.8</td>
+              <td>30.2</td>
+              <td>14.9</td>
+              <td>75.38 亿 / 33.46 亿</td>
+              <td>-2.41 亿</td>
+              <td>较52周高点低 11.1%</td>
+              <td><span class="tag watch">高弹性候选</span></td>
+            </tr>
+            <tr>
+              <td>佰维存储 688525.SH</td>
+              <td>427.91</td>
+              <td>51.1</td>
+              <td>23.7</td>
+              <td>17.4</td>
+              <td>68.14 亿 / 28.99 亿</td>
+              <td>-27.06 亿</td>
+              <td>较52周高点低 20.8%</td>
+              <td><span class="tag watch">AI 端侧候选</span></td>
+            </tr>
+            <tr>
+              <td>兆易创新 603986.SH</td>
+              <td>677.77</td>
+              <td>165.5</td>
+              <td>18.8</td>
+              <td>81.4</td>
+              <td>41.88 亿 / 14.61 亿</td>
+              <td>未纳入深挖</td>
+              <td>高位</td>
+              <td><span class="tag risk">估值过高</span></td>
+            </tr>
+            <tr>
+              <td>北京君正 300223.SZ</td>
+              <td>259.56</td>
+              <td>202.1</td>
+              <td>9.9</td>
+              <td>98.4</td>
+              <td>15.60 亿 / 3.19 亿</td>
+              <td>未纳入深挖</td>
+              <td>高位</td>
+              <td><span class="tag risk">估值过高</span></td>
+            </tr>
+            <tr>
+              <td>普冉股份 688766.SH</td>
+              <td>815.88</td>
+              <td>275.6</td>
+              <td>45.0</td>
+              <td>120.8</td>
+              <td>14.47 亿 / 2.51 亿</td>
+              <td>未纳入深挖</td>
+              <td>高位</td>
+              <td><span class="tag risk">估值过高</span></td>
+            </tr>
+            <tr>
+              <td>东芯股份 688110.SH</td>
+              <td>178.80</td>
+              <td>28944.7</td>
+              <td>22.0</td>
+              <td>143.0</td>
+              <td>4.79 亿 / 1.38 亿</td>
+              <td>未纳入深挖</td>
+              <td>高位</td>
+              <td><span class="tag risk">估值过高</span></td>
+            </tr>
+            <tr>
+              <td>恒烁股份 688416.SH</td>
+              <td>129.39</td>
+              <td>NA</td>
+              <td>10.5</td>
+              <td>71.7</td>
+              <td>2.19 亿 / 0.49 亿</td>
+              <td>未纳入深挖</td>
+              <td>高位</td>
+              <td><span class="tag risk">估值不低</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card span-4">
+        <h2>江波龙</h2>
+        <p><span class="tag good">综合第一</span></p>
+        <p><strong>Right Business：</strong>是。产品线和品牌矩阵最完整，覆盖嵌入式存储、SSD、移动存储、内存条，并有 FORESEE + Lexar 双品牌。</p>
+        <p><strong>Right People：</strong>待观察。执行力强，但仍受存储周期和库存管理影响。</p>
+        <p><strong>Right Price：</strong>是。TTM PE 高，但按 2026Q1 年化利润重算约 16.9 倍。</p>
+        <div class="score">
+          <div class="score-row"><span>商业模式</span><div class="bar"><span style="width: 82%"></span></div><strong>8.2</strong></div>
+          <div class="score-row"><span>市场规模</span><div class="bar"><span style="width: 82%"></span></div><strong>8.2</strong></div>
+          <div class="score-row"><span>竞争壁垒</span><div class="bar"><span style="width: 75%"></span></div><strong>7.5</strong></div>
+          <div class="score-row"><span>企业文化</span><div class="bar"><span style="width: 68%"></span></div><strong>6.8</strong></div>
+          <div class="score-row"><span>估值</span><div class="bar"><span style="width: 70%"></span></div><strong>7.0</strong></div>
+        </div>
+        <p class="small muted">关键数据：2026Q1 毛利率约 47.0%，净利率约 39.0%；资产负债率约 65.6%；存货占总资产约 50.0%。</p>
+      </section>
+
+      <section class="card span-4">
+        <h2>德明利</h2>
+        <p><span class="tag warn">最便宜但最险</span></p>
+        <p><strong>Right Business：</strong>待观察。Q1 爆发力极强，但更像高弹性场景化方案商，质量不如江波龙稳定。</p>
+        <p><strong>Right People：</strong>待观察。扩张积极，信用和授信使用更重。</p>
+        <p><strong>Right Price：</strong>是。按 2026Q1 年化利润重算约 14.9 倍，为候选池最低。</p>
+        <div class="score">
+          <div class="score-row"><span>商业模式</span><div class="bar"><span style="width: 70%"></span></div><strong>7.0</strong></div>
+          <div class="score-row"><span>市场规模</span><div class="bar"><span style="width: 79%"></span></div><strong>7.9</strong></div>
+          <div class="score-row"><span>竞争壁垒</span><div class="bar"><span style="width: 63%"></span></div><strong>6.3</strong></div>
+          <div class="score-row"><span>企业文化</span><div class="bar"><span style="width: 60%"></span></div><strong>6.0</strong></div>
+          <div class="score-row"><span>估值</span><div class="bar"><span style="width: 76%"></span></div><strong>7.6</strong></div>
+        </div>
+        <p class="small muted">关键数据：2026Q1 毛利率约 51.7%，净利率约 44.4%；资产负债率约 64.0%；存货占总资产约 66.3%。</p>
+      </section>
+
+      <section class="card span-4">
+        <h2>佰维存储</h2>
+        <p><span class="tag watch">AI 端侧特色最强</span></p>
+        <p><strong>Right Business：</strong>是。AI 穿戴、ePOP、BGA SSD 的差异化更明确，端侧 AI 受益清晰。</p>
+        <p><strong>Right People：</strong>待观察。研发投入积极，但景气上行期对现金流和库存占用仍然敏感。</p>
+        <p><strong>Right Price：</strong>是。按 2026Q1 年化利润重算约 17.4 倍。</p>
+        <div class="score">
+          <div class="score-row"><span>商业模式</span><div class="bar"><span style="width: 76%"></span></div><strong>7.6</strong></div>
+          <div class="score-row"><span>市场规模</span><div class="bar"><span style="width: 80%"></span></div><strong>8.0</strong></div>
+          <div class="score-row"><span>竞争壁垒</span><div class="bar"><span style="width: 71%"></span></div><strong>7.1</strong></div>
+          <div class="score-row"><span>企业文化</span><div class="bar"><span style="width: 66%"></span></div><strong>6.6</strong></div>
+          <div class="score-row"><span>估值</span><div class="bar"><span style="width: 69%"></span></div><strong>6.9</strong></div>
+        </div>
+        <p class="small muted">关键数据：2026Q1 毛利率约 48.0%，净利率约 42.5%；资产负债率约 65.0%；存货占总资产约 49.3%。</p>
+      </section>
+
+      <section class="card span-12">
+        <h2>股票魔法师视角</h2>
+        <p>从价格位置看，三只候选都不是底部票，而是 <strong>景气上行后的高位强势股</strong>：</p>
+        <table>
+          <thead>
+            <tr>
+              <th>公司</th>
+              <th>2025-07 月低点</th>
+              <th>近一年高点</th>
+              <th>2026-07-03 收盘</th>
+              <th>最新成交额</th>
+              <th>SEPA 结论</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>江波龙</td>
+              <td>79.80</td>
+              <td>723.50</td>
+              <td>618.02</td>
+              <td>126.66 亿</td>
+              <td><span class="tag watch">观察</span></td>
+            </tr>
+            <tr>
+              <td>德明利</td>
+              <td>78.79</td>
+              <td>980.00</td>
+              <td>881.91</td>
+              <td>169.88 亿</td>
+              <td><span class="tag watch">观察</span></td>
+            </tr>
+            <tr>
+              <td>佰维存储</td>
+              <td>62.60</td>
+              <td>517.00</td>
+              <td>427.91</td>
+              <td>158.99 亿</td>
+              <td><span class="tag watch">观察</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note small">
+          严格按 SEPA 给“买入触发”还缺两类可靠数据：MA50/150/200 与 RS/VCP 收缩细节。当前更稳妥的结论不是“现在就买”，而是“确认高位震荡后的二次收缩或重新突破再说”。
+        </div>
+      </section>
+
+      <section class="card span-6">
+        <h2>核心风险</h2>
+        <div class="risk-box small">
+          <p><strong>1. 周期风险高。</strong> 当前利润弹性大量来自存储价格上行，若 2026 下半年 DRAM/NAND 合约价拐头，年化 PE 逻辑会迅速失真。</p>
+          <p><strong>2. 现金流与库存占用重。</strong> 三家 2026Q1 经营现金流均为负，且库存占总资产接近 50%-66%。这不是典型“轻资产高现金流”价值股。</p>
+          <p><strong>3. 股价并不在低位。</strong> 三家公司都已较 2025 年低点上涨 5.8-10.2 倍，属于高景气定价，不属于恐慌错杀。</p>
+        </div>
+      </section>
+
+      <section class="card span-6">
+        <h2>最终判断</h2>
+        <div class="decision">
+          <div class="box">
+            <h3>最值得长期跟踪</h3>
+            <p><strong>江波龙</strong></p>
+            <p class="small muted">如果你想要“质量优先”，它是这个板块里最像平台型公司的标的。</p>
+          </div>
+          <div class="box">
+            <h3>最有赔率</h3>
+            <p><strong>德明利</strong></p>
+            <p class="small muted">如果周期景气维持，它最便宜；但一旦景气反转，伤害也可能最大。</p>
+          </div>
+          <div class="box">
+            <h3>最有主题弹性</h3>
+            <p><strong>佰维存储</strong></p>
+            <p class="small muted">AI 眼镜、智能穿戴、端侧存储的产业叙事最直接。</p>
+          </div>
+        </div>
+        <p style="margin-top:14px;"><strong>一句话：</strong>目前更像“高景气下的相对低估”，不是“便宜捡漏”。如果只能选一只，我会优先 <strong>江波龙</strong>；如果追求赔率而能承受更高波动，才看 <strong>德明利</strong>；如果押注 AI 端侧放量，则看 <strong>佰维存储</strong>。</p>
+        <p class="small muted">建议观察周期：至少看 2 个季度，重点盯价格周期、库存去化、Q2/Q3 现金流是否改善，以及是否能把高景气利润转成可持续 ROE。</p>
+      </section>
+
+      <section class="card span-12">
+        <h2>来源</h2>
+        <p class="small">数值来源主要为 Tushare MCP 与通达信 MCP 实时拉取；定性与行业背景参考以下公开资料：</p>
+        <table>
+          <tbody>
+            <tr><td><a href="https://static.cninfo.com.cn/finalpage/2026-04-28/1225214140.PDF">江波龙 2026 年第一季度报告</a></td><td>营收、净利、现金流、权益、Q1 同比</td></tr>
+            <tr><td><a href="https://static.cninfo.com.cn/finalpage/2026-04-28/1225214127.PDF">江波龙 2025 年年度报告摘要</a></td><td>分红、公司基本情况</td></tr>
+            <tr><td><a href="https://cn.longsys.com/">江波龙官网</a></td><td>产品线、品牌与业务结构</td></tr>
+            <tr><td><a href="https://cn.longsys.com/brand/lexar/">Lexar 雷克沙品牌页</a></td><td>Lexar 品牌归属与消费级品牌资产</td></tr>
+            <tr><td><a href="https://static.cninfo.com.cn/finalpage/2026-04-30/1225259081.PDF">德明利 2026 年第一季度报告</a></td><td>营收、净利、现金流、权益、Q1 同比</td></tr>
+            <tr><td><a href="https://static.cninfo.com.cn/finalpage/2026-02-28/1224989020.PDF">德明利 2025 年年度报告</a></td><td>行业景气、公司风险与业务方向</td></tr>
+            <tr><td><a href="https://static.cninfo.com.cn/finalpage/2026-04-16/1225107320.PDF">佰维存储 2026 年第一季度报告</a></td><td>AI 穿戴、Meta 客户、Q1 业绩驱动</td></tr>
+            <tr><td><a href="https://static.cninfo.com.cn/finalpage/2026-03-20/1225020228.PDF">佰维存储 2025 年年度报告摘要</a></td><td>分红、年度经营概况</td></tr>
+            <tr><td><a href="https://www.trendforce.com/research/download/RP251003KV">TrendForce 2026 Memory Price Forecast</a></td><td>存储景气上行的行业背景</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

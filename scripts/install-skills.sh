@@ -8,7 +8,8 @@
 # 选项:
 #   -t, --target <name>   预设目标 agent，可选: claude | codex | cursor | agents | all
 #   -l, --link            使用软链接（symlink）而非复制（随仓库更新自动生效）
-#   -f, --force           覆盖已存在的同名 skill / command（默认跳过）
+#   -f, --force           覆盖已存在的同名 skill / command（--link 时默认开启）
+#       --no-force        软链接模式下仍跳过已存在项（覆盖 --link 的默认覆盖行为）
 #   -n, --dry-run         只打印将要执行的操作，不实际改动
 #       --no-commands     只装 skills，不装 /command 斜杠命令
 #       --commands-only   只装 /command 斜杠命令，不装 skills
@@ -35,7 +36,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SKILLS_SRC="$REPO_ROOT/skills"
 CMDS_SRC="$REPO_ROOT/commands"
 
-TARGET=""; DEST_DIR=""; USE_LINK=0; FORCE=0; DRY_RUN=0; DO_SKILLS=1; DO_COMMANDS=1
+TARGET=""; DEST_DIR=""; USE_LINK=0; FORCE=0; NO_FORCE=0; DRY_RUN=0; DO_SKILLS=1; DO_COMMANDS=1
 
 usage() { sed -n '2,40p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
@@ -44,6 +45,7 @@ while [[ $# -gt 0 ]]; do
     -t|--target) TARGET="${2:-}"; shift 2 ;;
     -l|--link)   USE_LINK=1; shift ;;
     -f|--force)  FORCE=1; shift ;;
+    --no-force)  NO_FORCE=1; shift ;;
     -n|--dry-run) DRY_RUN=1; shift ;;
     --no-commands) DO_COMMANDS=0; shift ;;
     --commands-only) DO_SKILLS=0; shift ;;
@@ -52,6 +54,11 @@ while [[ $# -gt 0 ]]; do
     *)           DEST_DIR="$1"; shift ;;
   esac
 done
+
+# 软链接用于开发迭代，默认覆盖已存在项（复制模式仍默认跳过）
+if [[ "$USE_LINK" == "1" && "$NO_FORCE" != "1" ]]; then
+  FORCE=1
+fi
 
 # 目标列表，元素格式: "标签|skills目录|commands目录"（commands 目录为空表示不装命令）
 TARGETS=()

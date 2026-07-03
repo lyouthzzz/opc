@@ -316,54 +316,72 @@
 
 ## 六、分析输出模板
 
-### 投资分析报告结构
+### HTML 投资分析报告结构
 
-```
-# [公司名称] 价值分析报告
+价值投资报告必须输出为 standalone HTML，CSS 内联，不依赖外部资源。主体结构如下：
 
-## 一、公司本质
-- 不是什么：
-- 是什么：
-- 核心需求：
+```html
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[公司名称] 价值分析报告</title>
+  <style>
+    /* 使用简洁、可打印的样式；表格、评分条、风险矩阵优先用 CSS/inline SVG 实现。 */
+  </style>
+</head>
+<body>
+  <header>
+    <h1>[公司名称] 价值分析报告</h1>
+    <p>分析基准日 YYYY-MM-DD | 行情截止 YYYYMMDD | 财报报告期 YYYYMMDD | MCP 拉取 YYYY-MM-DD HH:MM</p>
+  </header>
 
-## 二、市场现状（Tushare 兼容 MCP）
+  <main>
+    <section id="decision">
+      <h2>投资判断</h2>
+      <!-- 首屏放结论：是否值得投资、安全边际、观察周期、核心理由。 -->
+    </section>
 
-**数据时效声明**（必填，置于本节最前）：
-```
-分析基准日 YYYY-MM-DD | 行情截止 YYYYMMDD | 财报报告期 YYYYMMDD | MCP 拉取 YYYY-MM-DD HH:MM
-```
+    <section id="business">
+      <h2>一、公司本质</h2>
+      <!-- 不是什么 / 是什么 / 核心需求。 -->
+    </section>
 
-- 最新股价 / 涨跌 / 换手（`trade_date` = 最近交易日）：
-- 股价历史位置（周/月 K 分位）：
-- 当前估值（PE / PB / 总市值 / 股息率，`trade_date` = 最近交易日）：
-- 最新报告期财务核心指标（`period` = 最新报告期，来自 fina_indicator + 三大表）：
-- 年报 / 分红 / 业绩预告（注明 `period` / `ann_date`）：
-- 公告 / 机构一致预期（`anns_d` / `report_rc`，注明日期）：
-- 大盘 & 宏观背景（含国债收益率 `yc_cb`，注明 `trade_date`）：
-- 滞后说明（若有行情/财报未能更新至锚点日期，在此说明原因）：
-> A 股财务/估值最完整；港股用 hk_income/hk_balancesheet/hk_cashflow、美股用 us_income/us_balancesheet/us_cashflow 取财报，其估值指标需据财报与市值自算。部分接口可能受套餐/权限限制，权限不足时降级并标注。
+    <section id="market">
+      <h2>二、市场现状</h2>
+      <!-- 表格展示最新股价、历史位置、估值、财务指标、分红、公告/预期、大盘宏观；注明 trade_date / period / ann_date / 来源。 -->
+    </section>
 
-## 三、Right Business
-### 商业模式
-### 市场规模
-### 竞争壁垒
+    <section id="right-business">
+      <h2>三、Right Business</h2>
+      <!-- 商业模式 / 市场规模 / 竞争壁垒。 -->
+    </section>
 
-## 四、Right People
-### 管理层评估
-### 企业文化
-### 信号观察
+    <section id="right-people">
+      <h2>四、Right People</h2>
+      <!-- 管理层评估 / 企业文化 / 信号观察。 -->
+    </section>
 
-## 五、Right Price
-### 一眼胖瘦
-### 撇去爆款模型
-### 多情景估值
-### 安全边际
+    <section id="right-price">
+      <h2>五、Right Price</h2>
+      <!-- 一眼胖瘦 / 撇去爆款模型 / 多情景估值 / 安全边际。 -->
+    </section>
 
-## 六、可持续性（四种好运）
+    <section id="durability">
+      <h2>六、可持续性（四种好运）</h2>
+    </section>
 
-## 七、综合结论
-### 三要素判断
-### 五维度评分
-### 核心风险
-### 最终判断
+    <section id="summary">
+      <h2>七、综合结论</h2>
+      <!-- 三要素判断、五维度评分图、核心风险、最终判断。 -->
+    </section>
+
+    <section id="limitations">
+      <h2>数据限制</h2>
+      <!-- MCP 权限不足、数据滞后、关键缺失项必须在这里说明。 -->
+    </section>
+  </main>
+</body>
+</html>
 ```
