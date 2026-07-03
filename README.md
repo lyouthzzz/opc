@@ -6,17 +6,19 @@
 
 | Skill | 说明 | 外部依赖 |
 |-------|------|----------|
-| [`价值投资分析`](skills/价值投资分析/SKILL.md) | 基于段永平/巴菲特理念的企业价值分析模型（right business/people/price 三要素 + 五维度 + 四种好运），并通过 Tushare 兼容 MCP 补充市场现状（股价/财报/估值/公告/宏观） | Tushare 兼容 MCP（`tushareMcp`）——见 [`mcp-tool-guide.md`](skills/价值投资分析/references/mcp-tool-guide.md) |
-| [`value-assessor`](skills/value-assessor/SKILL.md) | 格雷厄姆-巴菲特价值评估师，聚焦自由现金流 DCF、护城河评估与 15+ 估值模型交叉验证 | 通达信 TDX MCP（见其 references） |
+| [`价值投资`](skills/价值投资/SKILL.md) | 基于段永平/巴菲特理念的企业价值分析模型（right business/people/price 三要素 + 五维度 + 四种好运），并通过金融数据 MCP 补充市场现状（股价/财报/估值/公告/宏观） | 优先 `tdx`，缺失/失败再用 `tushareMcp` 补充——见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md) |
+| [`股票魔法师`](skills/股票魔法师/SKILL.md) | 基于 SEPA / Mark Minervini 方法的中短线交易分析，判断趋势模板、VCP、中枢点、止损、仓位与卖出信号 | A 股优先 `tdx`，失败降级 `tushareMcp` |
+| [`股票比较`](skills/股票比较/SKILL.md) | 综合 `价值投资` 与 `股票魔法师`，对多只股票做机会成本排序，并输出买入、持有、减仓、卖出或换仓计划 | 同上 |
 
 ## 斜杠命令 /command
 
-除自动触发外，安装后可用 `/command` 主动唤起 skill：
+除自动触发外，安装后可用 `/command` 主动唤起 skill。**命令名与 skill 中文名一致**（如 `/价值投资` 对应 `skills/价值投资/`，命令文件为 `commands/价值投资.md`）。
 
 | 命令 | 作用 | 用法示例 |
 |------|------|----------|
-| `/value-analysis` | 触发 `价值投资分析` skill，对指定公司做七步价值分析 | `/value-analysis 泡泡玛特 09992.HK` |
-| `/value-assessor` | 触发 `value-assessor` skill，做 DCF 估值与多模型评估 | `/value-assessor 600519.SH` |
+| `/价值投资` | 触发 `价值投资` skill，对指定公司做七步价值分析 | `/价值投资 泡泡玛特 09992.HK` |
+| `/股票魔法师` | 触发 `股票魔法师` skill，按 SEPA / VCP 规则分析买点、卖点、止损和仓位 | `/股票魔法师 600519.SH` |
+| `/股票比较` | 触发 `股票比较` skill，对多只股票做机会成本比较和买卖/换仓计划 | `/股票比较 600519.SH 09992.HK AAPL` |
 
 命令定义在 [`commands/`](commands/)，一份文件跨 Claude / Cursor / Codex 通用。安装位置：Claude/Cursor 放入各自 `commands/`，Codex 放入 `prompts/`（脚本已自动处理）。
 
@@ -27,16 +29,19 @@ opc/
 ├── README.md
 ├── scripts/
 │   └── install-skills.sh        # 脚本安装 skills + commands（可选）
-├── commands/                    # /command 斜杠命令定义
-│   ├── value-analysis.md
-│   └── value-assessor.md
+├── commands/                    # /command 斜杠命令（与 skill 同名，如 /价值投资）
+│   ├── 价值投资.md
+│   ├── 股票魔法师.md
+│   └── 股票比较.md
 └── skills/
-    ├── 价值投资分析/
+    ├── 股票比较/
+    │   └── SKILL.md
+    ├── 股票魔法师/
     │   ├── SKILL.md
-    │   └── references/          # 方法论、MCP 手册、公司知识库等
-    └── value-assessor/
+    │   └── references/
+    └── 价值投资/
         ├── SKILL.md
-        └── references/
+        └── references/          # 方法论、MCP 手册、公司知识库等
 ```
 
 > 每个 skill 是一个自包含目录：`SKILL.md`（技能主文件，含 YAML frontmatter）+ `references/`（按需加载的参考资料）。**安装即把整个目录放入 Agent 的 skills 目录；命令则放入 Agent 的 commands/prompts 目录。**
@@ -69,7 +74,7 @@ opc/
 要求：只做复制安装，不修改任何内容。
 ```
 
-安装后，重启 / 重新加载 Agent，即可：既能用触发词自动唤起 skill（如「帮我做一次价值投资分析」），也能用 `/value-analysis`、`/value-assessor` 主动调用。
+安装后，重启 / 重新加载 Agent，即可：既能用触发词自动唤起 skill（如「帮我做一次价值投资」），也能用 `/价值投资`、`/股票魔法师` 主动调用。
 
 ---
 
@@ -129,15 +134,36 @@ opc/
 - **卸载**：删除对应的 skill 目录与命令文件即可，例如：
 
 ```bash
-rm -rf ~/.claude/skills/价值投资分析
-rm -f  ~/.claude/commands/value-analysis.md
+rm -rf ~/.claude/skills/价值投资
+rm -f  ~/.claude/commands/价值投资.md
 ```
 
 ---
 
-## 依赖说明：价值投资分析 需配置 Tushare MCP
+## 依赖说明：金融数据 MCP 选型
 
-`价值投资分析` 的「市场现状分析」步骤依赖 **Tushare 兼容 MCP**。在 `~/.cursor/mcp.json`（或对应 Agent 的 MCP 配置）中加入：
+推荐组合：
+
+| MCP | 用途 | 结论 |
+|-----|------|------|
+| `tdx`（通达信 MCP） | A 股行情、盘口、竞价、板块、技术指标、可用 F10/财务数据 | 默认优先源；先查它 |
+| `tushareMcp` | A 股/港股/美股日线、财报、估值、公告、宏观 | 补充源；`tdx` 没有、失败或字段不足时使用 |
+| 通达信官方 / OpenClaw 插件 | 官方 Token、F10、智能选股、更多通达信数据 | 有官方 Token 或重度投研时再接 |
+
+免费 `tdx` MCP 可用 `tdx-mcp`：
+
+```json
+{
+  "mcpServers": {
+    "tdx": {
+      "command": "uvx",
+      "args": ["--from", "tdx-mcp", "tdx-mcp"]
+    }
+  }
+}
+```
+
+同时建议配置 **Tushare 兼容 MCP** 作为补充源。在 `~/.cursor/mcp.json`（或对应 Agent 的 MCP 配置）中加入：
 
 ```json
 {
@@ -149,4 +175,4 @@ rm -f  ~/.claude/commands/value-analysis.md
 }
 ```
 
-SDK/HTTP 直连使用 `https://ts.gyzcloud.top/api`（Tushare 标准 POST/SDK 入口），Token 到期或套餐变化时更新 MCP URL。工具清单与查询模式详见 [`mcp-tool-guide.md`](skills/价值投资分析/references/mcp-tool-guide.md)。
+SDK/HTTP 直连使用 `https://ts.gyzcloud.top/api`（Tushare 标准 POST/SDK 入口），Token 到期或套餐变化时更新 MCP URL。工具清单与查询模式详见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md)。
