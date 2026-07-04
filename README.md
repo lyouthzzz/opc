@@ -9,6 +9,7 @@
 | [`价值投资`](skills/价值投资/SKILL.md) | 基于段永平/巴菲特理念的企业价值分析模型（right business/people/price 三要素 + 五维度 + 四种好运），并通过同花顺问财补充市场现状（股价/估值/财报口径/行业板块/资金流） | 统一使用 `iwencai` / `hithink-*` skills——见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md) |
 | [`股票魔法师`](skills/股票魔法师/SKILL.md) | 基于 SEPA / Mark Minervini 方法的中短线交易分析，判断趋势模板、VCP、中枢点、止损、仓位与卖出信号 | 统一使用 `hithink-market-query` + 行业/板块问财 skills |
 | [`股票比较`](skills/股票比较/SKILL.md) | 综合 `价值投资` 与 `股票魔法师`，对多只股票做机会成本排序，并输出买入、持有、减仓、卖出或换仓计划 | 同上 |
+| [`行业分析`](skills/行业分析/SKILL.md) | A 股行业/板块机会挖掘：行业轮动、宏观到行业映射、产业链解读、近30天催化梳理与行业内个股筛选 | 统一使用 `hithink-industry-query`、`hithink-sector-selector`、`hithink-market-query`，可选增强 `行业轮动监控` / `产业链解读` / `捕捉公司事件机会` |
 
 ## 斜杠命令 /command
 
@@ -19,6 +20,7 @@
 | `/价值投资` | 触发 `价值投资` skill，对指定公司做七步价值分析 | `/价值投资 泡泡玛特 09992.HK` |
 | `/股票魔法师` | 触发 `股票魔法师` skill，按 SEPA / VCP 规则分析买点、卖点、止损和仓位 | `/股票魔法师 600519.SH` |
 | `/股票比较` | 触发 `股票比较` skill，对多只股票做机会成本比较和买卖/换仓计划 | `/股票比较 600519.SH 09992.HK AAPL` |
+| `/行业分析` | 触发 `行业分析` skill，对行业轮动、产业链、催化剂和行业内选股做分析 | `/行业分析 未来6到12个月哪些行业有机会` |
 
 命令定义在 [`commands/`](commands/)，一份文件跨 Claude / Cursor / Codex 通用。安装位置：Claude/Cursor 放入各自 `commands/`，Codex 放入 `prompts/`（脚本已自动处理）。
 
@@ -31,9 +33,12 @@ opc/
 │   └── install-skills.sh        # 脚本安装 skills + commands（可选）
 ├── commands/                    # /command 斜杠命令（与 skill 同名，如 /价值投资）
 │   ├── 价值投资.md
+│   ├── 行业分析.md
 │   ├── 股票魔法师.md
 │   └── 股票比较.md
 └── skills/
+    ├── 行业分析/
+    │   └── SKILL.md
     ├── 股票比较/
     │   └── SKILL.md
     ├── 股票魔法师/
@@ -50,10 +55,19 @@ opc/
 
 ## 安装方式一：Prompt 安装（推荐）
 
-用 AI Agent 在本仓库目录下打开会话，直接把下面这段 prompt 发给它，让 Agent 自动完成安装（含 skills 与 /command 命令）。适合不想记命令、想让 Agent 处理冲突与校验的场景。
+**无需 clone 本仓库。** 在 Cursor、Claude Code、Codex 等任意 Agent 会话中，直接复制下面整段 prompt 发送即可；Agent 会从 GitHub 拉取 [`lyouthzzz/opc`](https://github.com/lyouthzzz/opc) 并完成安装（含 skills 与 `/command` 命令）。适合不想记命令、想让 Agent 处理拉取、冲突与校验的场景。
 
 ```text
-你是负责安装 Agent Skill 与 /command 命令的助手。请把「当前仓库」的 skills/ 与 commands/ 安装到我的 Agent 目录，按以下步骤执行：
+你是负责安装 Agent Skill 与 /command 命令的助手。请从 GitHub 仓库 https://github.com/lyouthzzz/opc 安装 skills/ 与 commands/ 到我的 Agent 目录，按以下步骤执行：
+
+0. 获取源码（任选其一，优先 A）：
+   A. 浅克隆到临时目录后安装，装完可删：
+      git clone --depth 1 https://github.com/lyouthzzz/opc.git /tmp/opc-install
+      源码根目录 = /tmp/opc-install
+   B. 若当前工作区已是该仓库（含 skills/ 与 commands/），可直接用当前目录，跳过克隆。
+   C. 若无 git，用 GitHub 归档下载并解压：
+      curl -sL https://github.com/lyouthzzz/opc/archive/refs/heads/main.tar.gz | tar -xz -C /tmp
+      源码根目录 = /tmp/opc-main（若默认分支为 master，则路径为 /tmp/opc-master）
 
 1. 确认目标 Agent（可多选；不确定就先问我）及其目录：
    - Claude Code → skills: ~/.claude/skills/        commands: ~/.claude/commands/
@@ -61,17 +75,17 @@ opc/
    - Cursor     → skills: ~/.cursor/skills-cursor/   commands: ~/.cursor/commands/
    - 通用/其它   → skills: ~/.agents/skills/          commands: ~/.agents/commands/
 
-2. 安装 skills：遍历 skills/*/，把每个含 SKILL.md 的目录（连同 references/ 全部文件）复制到目标 skills 目录，保持目录名与结构不变。
+2. 安装 skills：遍历 <源码根目录>/skills/*/，把每个含 SKILL.md 的目录（连同 references/ 全部文件）复制到目标 skills 目录，保持目录名与结构不变。
 
-3. 安装 commands：把 commands/*.md 复制到目标 Agent 的命令目录（Claude/Cursor 用 commands/，Codex 用 prompts/）。
+3. 安装 commands：把 <源码根目录>/commands/*.md 复制到目标 Agent 的命令目录（Claude/Cursor 用 commands/，Codex 用 prompts/）。
 
 4. 冲突处理：目标已存在同名项时，先告诉我差异，确认后再覆盖，或备份为 <name>.bak 再装。
 
-5. 校验：读取每个已安装 SKILL.md 与命令文件的 frontmatter，确认 name / description 存在；确认 references/ 已一并复制。
+5. 校验：读取每个已安装 SKILL.md 与命令文件的 frontmatter，确认 name / description 存在；确认 references/ 已一并复制；与 GitHub 上仓库列出的 skill 名一致（价值投资、股票魔法师、股票比较、行业分析）。
 
-6. 输出安装报告：装了哪些 skill 与命令、装到哪些目录、有无跳过/覆盖/备份。
+6. 输出安装报告：源码来源（clone 路径或当前仓库）、装了哪些 skill 与命令、装到哪些目录、有无跳过/覆盖/备份。
 
-要求：只做复制安装，不修改任何内容。
+要求：只做复制安装，不修改 skill/command 内容；若用了临时目录，安装完成后询问是否删除。
 ```
 
 安装后，重启 / 重新加载 Agent，即可：既能用触发词自动唤起 skill（如「帮我做一次价值投资」），也能用 `/价值投资`、`/股票魔法师` 主动调用。
