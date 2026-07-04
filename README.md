@@ -1,6 +1,6 @@
 # opc — Agent Skills 仓库
 
-本仓库收录可复用的 **Agent Skill**（基于 `SKILL.md` 的技能包）与配套的 **`/command` 斜杠命令**，供 Cursor、Claude Code、Codex 等支持 skill 的 AI Agent 加载使用。
+本仓库收录可复用的 **Agent Skill**（基于 `SKILL.md` 的技能包）与配套的 **`/command` 斜杠命令**，供 Cursor、Claude Code、Codex、WorkBuddy 等支持 skill 的 AI Agent 加载使用。
 
 ## 已收录 Skills
 
@@ -55,7 +55,7 @@ opc/
 
 ## 安装方式一：Prompt 安装（推荐）
 
-**无需 clone 本仓库。** 在 Cursor、Claude Code、Codex 等任意 Agent 会话中，直接复制下面整段 prompt 发送即可；Agent 会从 GitHub 拉取 [`lyouthzzz/opc`](https://github.com/lyouthzzz/opc) 并完成安装（含 skills 与 `/command` 命令）。适合不想记命令、想让 Agent 处理拉取、冲突与校验的场景。
+**无需 clone 本仓库。** 在 Cursor、Claude Code、Codex、WorkBuddy 等任意 Agent 会话中，直接复制下面整段 prompt 发送即可；Agent 会从 GitHub 拉取 [`lyouthzzz/opc`](https://github.com/lyouthzzz/opc) 并完成安装（含 skills 与 `/command` 命令）。适合不想记命令、想让 Agent 处理拉取、冲突与校验的场景。
 
 ```text
 你是负责安装 Agent Skill 与 /command 命令的助手。请从 GitHub 仓库 https://github.com/lyouthzzz/opc 安装 skills/ 与 commands/ 到我的 Agent 目录，按以下步骤执行：
@@ -73,6 +73,7 @@ opc/
    - Claude Code → skills: ~/.claude/skills/        commands: ~/.claude/commands/
    - Codex      → skills: ~/.codex/skills/          commands: ~/.codex/prompts/
    - Cursor     → skills: ~/.cursor/skills-cursor/   commands: ~/.cursor/commands/
+   - WorkBuddy  → skills: ~/.workbuddy/skills/      commands: ~/.workbuddy/commands/
    - 通用/其它   → skills: ~/.agents/skills/          commands: ~/.agents/commands/
 
 2. 安装 skills：遍历 <源码根目录>/skills/*/，把每个含 SKILL.md 的目录（连同 references/ 全部文件）复制到目标 skills 目录，保持目录名与结构不变。
@@ -106,6 +107,7 @@ opc/
 # 只装命令 / 只装 skills
 ./scripts/install-skills.sh --target cursor --commands-only
 ./scripts/install-skills.sh --target codex --no-commands
+./scripts/install-skills.sh --target workbuddy
 
 # 覆盖已存在项 / 安装到自定义目录（自定义目录仅装 skills）
 ./scripts/install-skills.sh --target cursor --force
@@ -119,7 +121,7 @@ opc/
 
 | 选项 | 说明 |
 |------|------|
-| `-t, --target <name>` | 预设目标：`claude` / `codex` / `cursor` / `agents` / `all` |
+| `-t, --target <name>` | 预设目标：`claude` / `codex` / `cursor` / `workbuddy` / `agents` / `all` |
 | `-l, --link` | 用软链接代替复制（源仓库更新后免重装） |
 | `-f, --force` | 覆盖已存在的同名 skill / command（复制模式默认跳过） |
 | `--no-force` | 软链接模式下仍跳过已存在项（覆盖 `--link` 的默认覆盖行为） |
@@ -139,6 +141,7 @@ opc/
 | Claude Code | `~/.claude/skills/` | `~/.claude/commands/` |
 | Codex | `~/.codex/skills/` | `~/.codex/prompts/` |
 | Cursor | `~/.cursor/skills-cursor/` | `~/.cursor/commands/` |
+| WorkBuddy | `~/.workbuddy/skills/` | `~/.workbuddy/commands/` |
 | 通用/其它 | `~/.agents/skills/` | `~/.agents/commands/` |
 
 ---

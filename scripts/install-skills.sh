@@ -6,7 +6,7 @@
 #   ./scripts/install-skills.sh [选项] [DEST_DIR]
 #
 # 选项:
-#   -t, --target <name>   预设目标 agent，可选: claude | codex | cursor | agents | all
+#   -t, --target <name>   预设目标 agent，可选: claude | codex | cursor | workbuddy | agents | all
 #   -l, --link            使用软链接（symlink）而非复制（随仓库更新自动生效）
 #   -f, --force           覆盖已存在的同名 skill / command（--link 时默认开启）
 #       --no-force        软链接模式下仍跳过已存在项（覆盖 --link 的默认覆盖行为）
@@ -21,6 +21,7 @@
 #   claude → skills: ~/.claude/skills/        commands: ~/.claude/commands/
 #   codex  → skills: ~/.codex/skills/         commands: ~/.codex/prompts/
 #   cursor → skills: ~/.cursor/skills-cursor/ commands: ~/.cursor/commands/
+#   workbuddy → skills: ~/.workbuddy/skills/  commands: ~/.workbuddy/commands/
 #   agents → skills: ~/.agents/skills/        commands: ~/.agents/commands/
 #
 # 示例:
@@ -69,16 +70,18 @@ elif [[ -n "$TARGET" ]]; then
     claude) TARGETS+=("claude|$HOME/.claude/skills|$HOME/.claude/commands") ;;
     codex)  TARGETS+=("codex|$HOME/.codex/skills|$HOME/.codex/prompts") ;;
     cursor) TARGETS+=("cursor|$HOME/.cursor/skills-cursor|$HOME/.cursor/commands") ;;
+    workbuddy) TARGETS+=("workbuddy|$HOME/.workbuddy/skills|$HOME/.workbuddy/commands") ;;
     agents) TARGETS+=("agents|$HOME/.agents/skills|$HOME/.agents/commands") ;;
     all)
       TARGETS+=("claude|$HOME/.claude/skills|$HOME/.claude/commands")
       TARGETS+=("codex|$HOME/.codex/skills|$HOME/.codex/prompts")
       TARGETS+=("cursor|$HOME/.cursor/skills-cursor|$HOME/.cursor/commands")
+      TARGETS+=("workbuddy|$HOME/.workbuddy/skills|$HOME/.workbuddy/commands")
       TARGETS+=("agents|$HOME/.agents/skills|$HOME/.agents/commands") ;;
-    *) echo "未知 target: $TARGET（可选 claude|codex|cursor|agents|all）" >&2; exit 1 ;;
+    *) echo "未知 target: $TARGET（可选 claude|codex|cursor|workbuddy|agents|all）" >&2; exit 1 ;;
   esac
 else
-  echo "请用 --target <claude|codex|cursor|agents|all> 或提供 DEST_DIR。见 --help。" >&2
+  echo "请用 --target <claude|codex|cursor|workbuddy|agents|all> 或提供 DEST_DIR。见 --help。" >&2
   exit 1
 fi
 
