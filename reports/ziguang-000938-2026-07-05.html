@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>紫光股份（000938.SZ）价值分析报告</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --card: #fffdf8;
+      --ink: #1f2a24;
+      --muted: #6d746d;
+      --line: #d9cfbf;
+      --accent: #946b2d;
+      --accent-soft: #efe1c6;
+      --good: #2f6f4f;
+      --warn: #b56f1d;
+      --bad: #9d3f2f;
+      --shadow: 0 14px 40px rgba(43, 36, 24, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(148, 107, 45, 0.08), transparent 24%),
+        linear-gradient(180deg, #f7f3eb 0%, var(--bg) 100%);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    .hero,
+    .section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero:before {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(148, 107, 45, 0.18), rgba(148, 107, 45, 0));
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 34px; line-height: 1.15; margin-bottom: 8px; }
+    h2 { font-size: 22px; margin-bottom: 14px; }
+    h3 { font-size: 16px; margin-bottom: 8px; }
+    .muted { color: var(--muted); }
+    .small { font-size: 13px; }
+    .lead {
+      font-size: 18px;
+      max-width: 760px;
+      margin-top: 14px;
+    }
+
+    .section {
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #6b4d1e;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .decision {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fffaf0 0%, #fffdf8 100%);
+    }
+
+    .decision strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid;
+      margin-bottom: 8px;
+    }
+
+    .yes { color: var(--good); border-color: rgba(47, 111, 79, 0.35); background: rgba(47, 111, 79, 0.08); }
+    .watch { color: var(--warn); border-color: rgba(181, 111, 29, 0.35); background: rgba(181, 111, 29, 0.08); }
+    .no { color: var(--bad); border-color: rgba(157, 63, 47, 0.35); background: rgba(157, 63, 47, 0.08); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 11px 10px;
+      border-bottom: 1px solid #e9dfd1;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      width: 22%;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 52px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: #eee4d5;
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #b98939 0%, #6e8d52 100%);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .note, .limit {
+      border-radius: 16px;
+      padding: 16px 18px;
+      border: 1px solid;
+    }
+
+    .note {
+      background: #f7f6f1;
+      border-color: #ddd7c8;
+    }
+
+    .limit {
+      background: #fff4ef;
+      border-color: #efc7b7;
+    }
+
+    .sources a {
+      color: #8a5818;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .sources li { margin-bottom: 8px; }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .kpi {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fffaf3;
+    }
+
+    .kpi .v {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 4px 0;
+    }
+
+    @media (max-width: 860px) {
+      .grid-3, .grid-2, .kpis { grid-template-columns: 1fr; }
+      .score-row { grid-template-columns: 90px 1fr 44px; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="small muted">价值投资报告 | 紫光股份 000938.SZ</div>
+      <h1>紫光股份：AI 基建受益者，但不是能忽略估值和资产负债表的那类好生意</h1>
+      <p class="muted small">数据时效：分析基准日 2026-07-05 | 行情截止 2026-07-03（同花顺问财） | 财报报告期 2026-03-31 | 问财拉取时间 2026-07-05 15:17 CST</p>
+      <p class="lead">结论先放前面：紫光股份更像一只受益于 AI 算力与企业数字化投入的景气成长股，而不是段永平/巴菲特语境下那种“护城河极深、现金流极顺、价格合适时可以重仓”的标准价值股。Right Business 勉强成立，Right People 目前偏待观察，Right Price 还谈不上舒服。</p>
+      <div style="margin-top:16px">
+        <span class="pill">看懂生意：可以</span>
+        <span class="pill">安全边际：偏低</span>
+        <span class="pill">适合：跟踪而非重仓</span>
+        <span class="pill">观察周期：3-5 年</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi">
+          <div class="small muted">最新收盘价</div>
+          <div class="v">30.28 元</div>
+          <div class="small muted">2026-07-03，日涨幅 +4.31%</div>
+        </div>
+        <div class="kpi">
+          <div class="small muted">总市值</div>
+          <div class="v">866.0 亿元</div>
+          <div class="small muted">PB 5.58 | TTM PE 40.76</div>
+        </div>
+        <div class="kpi">
+          <div class="small muted">最新报告期营收</div>
+          <div class="v">279.85 亿元</div>
+          <div class="small muted">2026Q1，同比 +34.61%</div>
+        </div>
+        <div class="kpi">
+          <div class="small muted">最新报告期归母净利</div>
+          <div class="v">7.88 亿元</div>
+          <div class="small muted">2026Q1，同比 +126.06%</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>一、最终判断</h2>
+      <div class="grid grid-3">
+        <div class="decision">
+          <span class="tag yes">Right Business：是，但不顶级</span>
+          <strong>生意能赚到钱，但不是轻资产高毛利模型</strong>
+          <p>本质是以新华三为核心的企业级 ICT 基础设施与解决方案平台，受益于算力、网络、存储、云和安全的一体化建设。问题在于毛利率和净利率都不高，资产负债表也不轻。</p>
+        </div>
+        <div class="decision">
+          <span class="tag watch">Right People：待观察</span>
+          <strong>经营层有延续性，治理层最近有变化</strong>
+          <p>总经理王竑弢自 2017 年起任职，但 2026-06-29 董事长由李涛接任，公司同时终止 H 股、推进定增与新华三剩余股权交易，资本动作偏多，治理确定性不算高。</p>
+        </div>
+        <div class="decision">
+          <span class="tag no">Right Price：偏贵</span>
+          <strong>AI 预期已经写进价格，安全边际不足</strong>
+          <p>当前静态 PE 51.38 倍、TTM PE 40.76 倍、PB 5.58 倍。对一个 2025 年净利率不足 2%、资产负债率超过 80% 的 ICT 厂商，这不便宜。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>二、市场现状快照</h2>
+      <table>
+        <tr><th>项目</th><th>数据</th><th>口径 / 来源</th></tr>
+        <tr><td>大盘环境</td><td>上证指数 4043.64；同花顺全A成交额 3.21 万亿元；上涨 3803 家，下跌 1625 家</td><td>trade_date 2026-07-03，来源：同花顺问财</td></tr>
+        <tr><td>当前股价</td><td>30.28 元，单日 +4.31%</td><td>trade_date 2026-07-03，来源：同花顺问财</td></tr>
+        <tr><td>区间位置</td><td>52 周高 34.43、低 23.17，当前位置约在近 1 年区间的 63% 处；近 1 年涨幅 +27.07%</td><td>trade_date 2026-07-03，来源：同花顺问财</td></tr>
+        <tr><td>估值</td><td>总市值 866.0 亿元；TTM PE 40.76；动态 PE 27.48；静态 PE 51.38；PB 5.58；股息率 0.26%</td><td>trade_date 2026-07-03；股息率/分红口径 2025-12-31，来源：同花顺问财</td></tr>
+        <tr><td>交易热度</td><td>成交额 75.84 亿元；换手率 8.61%；主力资金净流入 6.44 亿元</td><td>trade_date 2026-07-03，来源：同花顺问财</td></tr>
+        <tr><td>最新财报</td><td>营收 279.85 亿元；归母净利 7.88 亿元；ROE 5.21%；毛利率 12.88%；净利率 3.43%；经营现金流 -30.93 亿元</td><td>period 2026-03-31；ann_date 2026-04-29，来源：同花顺问财 / 2026Q1 报告</td></tr>
+        <tr><td>分红</td><td>2025 年分红金额 1.86 亿元；现金分红比例 11.03%</td><td>period 2025-12-31，来源：同花顺问财</td></tr>
+        <tr><td>行业口径</td><td>所属同花顺行业：计算机 / IT 服务 / IT 服务Ⅲ；行业 PB 4.06，行业 PE 为负</td><td>trade_date 2026-07-03，来源：同花顺问财</td></tr>
+        <tr><td>机构预期</td><td>问财返回到一条目标价 35.1 元、华泰证券 2026-05-10 研报，评级“增持”</td><td>ann_date 2026-05-10，来源：同花顺问财</td></tr>
+      </table>
+      <div class="note" style="margin-top:14px">
+        <strong>一句话看盘面：</strong>股价已从 52 周低位明显修复，资金也在回流，市场并不是把它当成“便宜股”来定价，而是在提前交易 AI 基建和新华三业绩释放。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>三、公司本质：它不是什么，它是什么</h2>
+      <div class="grid grid-2">
+        <div>
+          <h3>不是什么</h3>
+          <ul>
+            <li>不是 GPU / ASIC 芯片设计公司，不能按纯算力核心零部件给估值。</li>
+            <li>不是高毛利 SaaS 软件公司，利润结构没有那么轻。</li>
+            <li>不是消费品牌型企业，客户粘性主要来自政企场景、渠道、服务与整体方案，不是终端心智垄断。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>是什么</h3>
+          <ul>
+            <li>是以新华三为核心的企业级 ICT 基础设施与解决方案提供商，覆盖“算-网-存-云-安-维”。</li>
+            <li>卖的是网络设备、服务器、存储、云平台、安全产品和行业解决方案，吃的是企业与政府数字化、国产化、AI 基础设施建设预算。</li>
+            <li>需求本质不是情绪消费，而是客户对算力、联接、数据中心、运维和安全的刚性建设需求。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>四、Right Business</h2>
+      <div class="grid grid-2">
+        <div>
+          <h3>商业模式</h3>
+          <ul>
+            <li>2025 年营收 967.48 亿元，同比增长 22.43%；其中 ICT 基础设施与服务收入 768.47 亿元，占比 79.43%。</li>
+            <li>控股子公司新华三 2025 年营收 759.81 亿元，同比增长 37.96%，净利润 31.51 亿元，同比增长 12.30%。</li>
+            <li>问题在于利润率薄。2026Q1 毛利率 12.88%、净利率 3.43%；2025 年全年归母净利 16.86 亿元，对 967.48 亿元营收意味着净利率不到 2%。</li>
+            <li>2025 年经营现金流净额为 +34.87 亿元，但 2026Q1 经营现金流净额为 -30.93 亿元，说明生意对项目交付、回款节奏、备货与预付款比较敏感。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>市场规模与壁垒</h3>
+          <ul>
+            <li>AI 训练/推理、数据中心升级、国产化替代、政企云和网络安全，都还在扩容期，赛道够大。</li>
+            <li>公司 2025 年在中国企业网交换机市占率 36.1% 排名第一，企业级 WLAN 27.9% 持续第一，数据中心交换机 33.1% 排名第二，X86 服务器 12.5% 排名第三。</li>
+            <li>壁垒主要来自产品线完整度、渠道覆盖、交付能力、服务体系和大客户关系，而不是不可撼动的品牌溢价。</li>
+            <li>竞争对手强，华为、浪潮、联想等都在，护城河有，但没宽到可以完全无视竞争。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>五、Right People</h2>
+      <div class="grid grid-2">
+        <div>
+          <h3>偏正面的点</h3>
+          <ul>
+            <li>总经理王竑弢任职自 2017-11-23 起，经营连续性还在。</li>
+            <li>公司在官方口径上战略主线清楚，就是围绕“算力×联接”和“AI in ALL / AI for ALL”把算、网、存、云、安、维串起来。</li>
+            <li>新华三产品矩阵够全，说明组织执行力和研发/交付体系是成立的。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>需要打折的点</h3>
+          <ul>
+            <li>公司无实际控制人，控股股东西藏紫光通信科技有限公司持股 28.0%。</li>
+            <li>2026-06-29 公司更换董事长为李涛，并拟在章程修订后将法定代表人变更为总裁王竑弢。</li>
+            <li>2026-02-11 终止 H 股上市，同时推进 2026 年定增；2025Q4 起又在推进新华三剩余 19% 股权交易，资本运作密集。</li>
+            <li>这不一定是坏事，但说明你买的不只是经营，还包含治理和资本结构演进的不确定性。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>六、Right Price</h2>
+      <table>
+        <tr><th>情景</th><th>假设</th><th>对应估值</th><th>判断</th></tr>
+        <tr>
+          <td>悲观</td>
+          <td>2026 年利润基本停留在 2025 年水平，归母净利约 16.9 亿元</td>
+          <td>PE 约 51 倍</td>
+          <td>明显偏贵</td>
+        </tr>
+        <tr>
+          <td>中性</td>
+          <td>按 2026Q1 扣非净利 6.20 亿元粗略年化，全年约 24-26 亿元<br><span class="small muted">这里是推演，不是公司指引</span></td>
+          <td>PE 约 33-35 倍</td>
+          <td>不便宜，只能说勉强合理</td>
+        </tr>
+        <tr>
+          <td>乐观</td>
+          <td>AI 景气持续、订单兑现、归母净利升到 31-32 亿元，接近问财动态 PE 隐含口径</td>
+          <td>PE 约 27-28 倍</td>
+          <td>这时价格才算顺一点，但市场已经提前在赌这个结果</td>
+        </tr>
+      </table>
+      <div class="note" style="margin-top:14px">
+        <strong>估值核心矛盾：</strong>公司确实在吃 AI 红利，但当前价格已经不再是“坏消息砸出来的便宜”。反过来说，若 AI 基建订单兑现放缓，或者利润释放不及市场隐含预期，估值回撤也会快。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>七、可持续性：四种好运</h2>
+      <div class="grid grid-2">
+        <div>
+          <h3>已经具备的好运</h3>
+          <ul>
+            <li>第二种好运：产品矩阵足够多，能持续覆盖网络、服务器、存储、云、安全和运维场景。</li>
+            <li>第三种好运：多年研发、交付、服务和渠道能力是可以复用的，不是一次性红利。</li>
+            <li>第四种好运：在政企网络和企业级 WLAN 等领域已有头部位置，资源会向头部平台聚集。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>仍然受制于的地方</h3>
+          <ul>
+            <li>行业还是明显受预算周期和技术迭代驱动，景气度波动比消费品大得多。</li>
+            <li>“黑洞效应”有，但没有强到无人能打，尤其在 AI 算力链条上仍有大量强对手。</li>
+            <li>这类公司更接近“有持续竞争力的产业龙头”，不是那种 10 年后几乎不用再证明自己的绝对稀缺资产。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>八、五维度评分</h2>
+      <div class="score-row"><div>商业模式</div><div class="bar"><span style="width:70%"></span></div><div>7/10</div></div>
+      <div class="score-row"><div>市场规模</div><div class="bar"><span style="width:80%"></span></div><div>8/10</div></div>
+      <div class="score-row"><div>竞争壁垒</div><div class="bar"><span style="width:65%"></span></div><div>6.5/10</div></div>
+      <div class="score-row"><div>企业文化</div><div class="bar"><span style="width:55%"></span></div><div>5.5/10</div></div>
+      <div class="score-row"><div>估值</div><div class="bar"><span style="width:40%"></span></div><div>4/10</div></div>
+    </section>
+
+    <section class="section">
+      <h2>九、核心风险</h2>
+      <table>
+        <tr><th>风险</th><th>为什么重要</th><th>当前信号</th></tr>
+        <tr>
+          <td>利润率太薄</td>
+          <td>营收做大不代表股东回报同步变大，低净利率意味着稍有价格战或项目延迟，利润波动就会被放大。</td>
+          <td>2026Q1 毛利率 12.88%，净利率 3.43%。</td>
+        </tr>
+        <tr>
+          <td>资产负债表偏重</td>
+          <td>高负债 + 高营运资金占用，会让好景气年份看着很猛，逆风年份压力也更大。</td>
+          <td>2025 年末资产负债率 81.85%，带息债务 316.57 亿元，货币资金 89.45 亿元。</td>
+        </tr>
+        <tr>
+          <td>治理与资本动作不确定性</td>
+          <td>终止 H 股、推进定增、收购新华三剩余股权、近期董事长调整，都可能影响资本回报和估值锚。</td>
+          <td>2026-02-11 终止 H 股；2026 年定增推进中；2026-06-29 董事长变更。</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>十、结论</h2>
+      <div class="grid grid-2">
+        <div class="decision">
+          <span class="tag watch">投资判断</span>
+          <strong>值得跟踪，但不属于“现在就很便宜”的价值投资机会</strong>
+          <p>如果你的框架偏段永平，紫光股份更像“看得懂、也有成长，但价格和生意质量都还没到能无脑下手”的公司。最合适的动作不是立刻给高仓位，而是继续跟踪 AI 订单兑现、利润率改善、新华三股权整合和定增落地。</p>
+        </div>
+        <div class="decision">
+          <span class="tag watch">安全边际</span>
+          <strong>当前安全边际偏低</strong>
+          <p>股价已经在交易 AI 基建的乐观预期，若后续利润释放跟不上，回撤空间不小。更舒服的买点，通常要等两种情况之一：一是价格回到明显悲观，二是利润率和现金流证明它不是只会“增收不增厚”。</p>
+        </div>
+      </div>
+      <div class="note" style="margin-top:14px">
+        <strong>我的最终句子：</strong>紫光股份可以放在观察名单里，但以 2026-07-05 这个时点看，它更像景气成长股，不像已经出现足够安全边际的价值股。大家可以先看个 3 到 5 年，重点看利润质量，而不只是收入和题材。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>十一、数据限制</h2>
+      <div class="limit">
+        <ul>
+          <li>本报告的行情、估值、财务快照统一优先使用同花顺问财；部分字段如沪深 300 PE、行业排名、板块资金口径返回不稳定或不够完整，未强行补猜。</li>
+          <li>IT 服务行业 PE 在问财返回为负值，说明行业内亏损成分较多，横向比较参考价值有限，不能机械拿行业 PE 做锚。</li>
+          <li>估值情景里的“中性/乐观”属于基于公开财报与当前市值做的推演，不是公司指引，也不是投资建议。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section sources">
+      <h2>十二、主要来源</h2>
+      <ul>
+        <li>同花顺问财：`hithink-market-query`、`hithink-finance-query`、`hithink-industry-query`、`hithink-management-query`，拉取时间 2026-07-05 15:17 CST。</li>
+        <li>紫光股份 2025 年年度报告摘要（披露日 2026-04-15）：<a href="https://static.cninfo.com.cn/finalpage/2026-04-15/1225101865.PDF">https://static.cninfo.com.cn/finalpage/2026-04-15/1225101865.PDF</a></li>
+        <li>紫光股份 2026 年第一季度报告（披露日 2026-04-29）：<a href="https://static.cninfo.com.cn/finalpage/2026-04-29/1225231846.PDF">https://static.cninfo.com.cn/finalpage/2026-04-29/1225231846.PDF</a></li>
+        <li>紫光股份关于终止 H 股上市及 2026 年定增事项相关公告（2026-02-12）：<a href="https://static.cninfo.com.cn/finalpage/2026-02-12/1224976622.PDF">https://static.cninfo.com.cn/finalpage/2026-02-12/1224976622.PDF</a></li>
+        <li>紫光股份关于修订章程并变更法定代表人、董事长调整公告（2026-06-30）：<a href="https://static.cninfo.com.cn/finalpage/2026-06-30/1225394500.PDF">https://static.cninfo.com.cn/finalpage/2026-06-30/1225394500.PDF</a></li>
+        <li>新华三集团公司介绍：<a href="https://www.h3c.com/cn/About_H3C/">https://www.h3c.com/cn/About_H3C/</a></li>
+        <li>新华三集团公司新闻页（用于管理层变动和近期业务动态辅助核对）：<a href="https://www.h3c.com/cn/About_H3C/News_Media/Company_News/">https://www.h3c.com/cn/About_H3C/News_Media/Company_News/</a></li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

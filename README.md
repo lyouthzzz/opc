@@ -6,7 +6,7 @@
 
 | Skill | 说明 | 外部依赖 |
 |-------|------|----------|
-| [`价值投资`](skills/价值投资/SKILL.md) | 基于段永平/巴菲特理念的企业价值分析模型（right business/people/price 三要素 + 五维度 + 四种好运），并通过同花顺问财补充市场现状（股价/估值/财报口径/行业板块/资金流） | 统一使用 `iwencai` / `hithink-*` skills——见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md) |
+| [`价值投资`](skills/价值投资/SKILL.md) | 基于段永平/巴菲特理念的企业价值分析模型（right business/people/price 三要素 + 五维度 + 四种好运），并通过同花顺问财补充市场现状（股价/估值/财报口径/行业板块/资金流） | 统一使用 `iwencai` / `hithink-*` skills——见 [`market-data-guide.md`](skills/价值投资/references/market-data-guide.md) |
 | [`股票魔法师`](skills/股票魔法师/SKILL.md) | 基于 SEPA / Mark Minervini 方法的中短线交易分析，判断趋势模板、VCP、中枢点、止损、仓位与卖出信号 | 统一使用 `hithink-market-query` + 行业/板块问财 skills |
 | [`股票比较`](skills/股票比较/SKILL.md) | 综合 `价值投资` 与 `股票魔法师`，对多只股票做机会成本排序，并输出买入、持有、减仓、卖出或换仓计划 | 同上 |
 | [`行业分析`](skills/行业分析/SKILL.md) | A 股行业/板块机会挖掘：行业轮动、宏观到行业映射、产业链解读、近30天催化梳理与行业内个股筛选 | 统一使用 `hithink-industry-query`、`hithink-sector-selector`、`hithink-market-query`，可选增强 `行业轮动监控` / `产业链解读` / `捕捉公司事件机会` |
@@ -46,7 +46,7 @@ opc/
     │   └── references/
     └── 价值投资/
         ├── SKILL.md
-        └── references/          # 方法论、MCP 手册、公司知识库等
+        └── references/          # 方法论、市场数据手册、公司知识库等
 ```
 
 > 每个 skill 是一个自包含目录：`SKILL.md`（技能主文件，含 YAML frontmatter）+ `references/`（按需加载的参考资料）。**安装即把整个目录放入 Agent 的 skills 目录；命令则放入 Agent 的 commands/prompts 目录。**
@@ -185,4 +185,4 @@ export IWENCAI_BASE_URL="https://openapi.iwencai.com"
 export IWENCAI_API_KEY="你的_IWENCAI_API_KEY"
 ```
 
-工具清单、问句改写规则与数据时效校验见 [`mcp-tool-guide.md`](skills/价值投资/references/mcp-tool-guide.md)。
+工具清单、问句改写规则与数据时效校验见 [`market-data-guide.md`](skills/价值投资/references/market-data-guide.md)。

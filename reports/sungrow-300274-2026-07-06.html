@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>阳光电源（300274.SZ）价值分析报告</title>
+  <style>
+    :root {
+      --bg: #f3f0e8;
+      --card: #fffdf8;
+      --ink: #1d2622;
+      --muted: #6f776f;
+      --line: #d8d1c2;
+      --accent: #8e6428;
+      --accent-soft: #efe3cc;
+      --good: #2b6f4a;
+      --watch: #a56b14;
+      --bad: #9f3d31;
+      --shadow: 0 16px 42px rgba(44, 38, 27, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(142, 100, 40, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8f4ec 0%, var(--bg) 100%);
+      line-height: 1.65;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 54px;
+    }
+
+    .hero,
+    .section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: -50px;
+      top: -50px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(142, 100, 40, 0.18), rgba(142, 100, 40, 0));
+    }
+
+    .section {
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(30px, 4vw, 42px); line-height: 1.12; margin-bottom: 8px; }
+    h2 { font-size: 22px; margin-bottom: 14px; }
+    h3 { font-size: 16px; margin-bottom: 8px; }
+
+    .sub, .muted, .small { color: var(--muted); }
+    .sub { font-size: 14px; margin-bottom: 14px; }
+    .small { font-size: 13px; }
+    .lead {
+      font-size: 18px;
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-main { grid-template-columns: 1.1fr 0.9fr; }
+
+    .decision {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fffaf1 0%, #fffdf8 100%);
+    }
+
+    .decision strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #6f4c16;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid;
+    }
+
+    .yes { color: var(--good); background: rgba(43, 111, 74, 0.08); border-color: rgba(43, 111, 74, 0.32); }
+    .watch { color: var(--watch); background: rgba(165, 107, 20, 0.08); border-color: rgba(165, 107, 20, 0.32); }
+    .no { color: var(--bad); background: rgba(159, 61, 49, 0.08); border-color: rgba(159, 61, 49, 0.32); }
+
+    .note,
+    .limit {
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid;
+    }
+
+    .note {
+      background: #f7f5ef;
+      border-color: #ddd6c8;
+    }
+
+    .limit {
+      background: #fff4ef;
+      border-color: #edc7b7;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .kpi {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fffaf3;
+    }
+
+    .kpi .k {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .kpi .v {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 4px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 11px 10px;
+      border-bottom: 1px solid #e9e1d3;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      width: 24%;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 112px 1fr 50px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: #ece3d5;
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #c08b36 0%, #6a8c59 100%);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .sources a {
+      color: #8a5a1a;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .sources li { margin-bottom: 8px; }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #f1ecdf;
+      padding: 1px 5px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-3,
+      .grid-2,
+      .grid-main,
+      .kpis { grid-template-columns: 1fr; }
+      .score-row { grid-template-columns: 92px 1fr 44px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <p class="sub">价值投资分析 | 阳光电源 300274.SZ | 分析基准日 2026-07-06</p>
+      <h1>公司本身是强者，但现在更像“值得长期跟踪”，不是“明显便宜”。</h1>
+      <p class="lead">
+        阳光电源的核心不是简单的“光伏设备股”，而是以逆变器和储能系统为主轴、叠加全球服务网络和电力电子能力的平台型清洁能源设备公司。
+        生意看得懂，竞争力也不弱，但当前价格已经不是市场极度悲观的位置，安全边际更多取决于储能持续兑现和 AIDC 新业务落地速度。
+      </p>
+      <div class="kpis">
+        <div class="kpi">
+          <div class="k">最终判断</div>
+          <div class="v">值得看</div>
+          <div class="small">更偏“观察名单”，不是重仓价格</div>
+        </div>
+        <div class="kpi">
+          <div class="k">三要素</div>
+          <div class="v">是 / 是 / 待观察</div>
+          <div class="small">Business / People / Price</div>
+        </div>
+        <div class="kpi">
+          <div class="k">建议观察周期</div>
+          <div class="v">2-4 季度</div>
+          <div class="small">至少看完 2026 年中报与全年趋势</div>
+        </div>
+        <div class="kpi">
+          <div class="k">持续性争议</div>
+          <div class="v">会长期存在</div>
+          <div class="small">行业周期、价格战、AIDC 落地都要继续验证</div>
+        </div>
+      </div>
+      <div class="limit" style="margin-top:18px;">
+        <strong>数据限制</strong>
+        <p class="small" style="margin-top:6px;">
+          本次市场快照按 skill 要求优先使用同花顺问财。问财已稳定返回个股行情、估值、财报、资金流、分红、部分机构研报与板块数据；
+          但 <span class="mono">近5年区间位置</span>、<span class="mono">沪深300 市盈率</span>、<span class="mono">光伏设备行业盈利汇总</span> 未稳定返回，因此在报告中明确标缺，不用别的数据源补空。
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>市场现状快照</h2>
+      <p class="sub">数据时效：分析基准日 2026-07-06 | 行情截止 同花顺问财最新/今日口径（trade_date 20260706） | 财报报告期 2026-03-31 | 问财拉取时间 2026-07-06 10:13 CST</p>
+      <div class="grid grid-main">
+        <div>
+          <table>
+            <tr><th>大盘环境</th><td>上证指数 4056.67，日涨幅 +0.32%；同花顺全A(沪深京)成交额 1.249 万亿元，上涨 2999 家、下跌 2360 家。来源：同花顺问财，trade_date 20260706。</td></tr>
+            <tr><th>当前股价</th><td>最新价 130.23 元，最新涨跌幅 +3.20%，成交额 33.59 亿元，换手率 1.62%。来源：同花顺问财，trade_date 20260706。</td></tr>
+            <tr><th>历史位置</th><td>近1年涨跌幅 +96.94%；52 周高点 209.19 元，52 周低点 65.72 元，当前约处于 52 周区间的 45% 位置。近5年区间位置：问财当前未稳定返回该字段。</td></tr>
+            <tr><th>当前估值</th><td>总市值 2724.0 亿元，PE TTM 22.63 倍，PB 5.55 倍，2025 年度股息率 0.96%。来源：同花顺问财，trade_date 20260706 / period 20251231。</td></tr>
+            <tr><th>最新财报</th><td>2026Q1 营收 155.61 亿元，同比 -18.26%；归母净利润 22.91 亿元，同比 -40.12%；ROE 4.81%；毛利率 33.26%；净利率 14.43%；经营现金流净额 12.08 亿元。来源：同花顺问财，period 20260331，公告日 2026-04-28。</td></tr>
+            <tr><th>年度财务底子</th><td>2025 年营收 891.84 亿元，同比 +14.55%；归母净利润 134.61 亿元，同比 +21.97%；ROE 32.24%；经营现金流净额 169.18 亿元；资本开支 30.08 亿元；资产负债率 58.06%。来源：同花顺问财，period 20251231。</td></tr>
+            <tr><th>分红与资金</th><td>2025 年累计分红 33.71 亿元，现金分红比例 25.04%；2026-07-06 主力资金净流入 2.62 亿元。来源：同花顺问财，period 20251231 / trade_date 20260706。</td></tr>
+            <tr><th>股东与预期</th><td>实际控制人曹仁贤；截至 2026-04-28 公告口径，股东户数 31.22 万户，较上期 +22.37%。问财稳定返回的样本研报多为“买入/维持”，个别目标价样本 155 元、220 元，但未形成可验证的一致预期均值。</td></tr>
+            <tr><th>行业/板块</th><td>光伏设备板块 2026-07-06 涨幅 +0.12%，主力净买入 -0.55 亿元，涨跌幅排名 1559。行业 PE TTM 为负（问财返回 -44.11 倍，trade_date 20260703），反映板块内仍有大量亏损公司，行业情绪并不热。</td></tr>
+          </table>
+        </div>
+        <div class="note">
+          <h3>快照结论</h3>
+          <ul>
+            <li>股价过去一年几乎翻倍，但离 52 周高点仍有明显距离，说明市场情绪修复过、也回吐过。</li>
+            <li>公司自身估值并不离谱，22 倍左右 TTM PE 对龙头设备公司不算贵，但也绝不是“地板价”。</li>
+            <li>板块层面不热，反而对个股是中性偏好事：没有明显板块泡沫，但也缺少情绪抬轿。</li>
+            <li>Q1 同比下滑是真问题，不是可以略过的小波动；但现金流和全年 2025 的底子并不差。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>三要素判断</h2>
+      <table>
+        <tr>
+          <th>Right Business</th>
+          <td><span class="tag yes">是</span></td>
+          <td>本质是清洁能源电力电子平台，不只是单一光伏逆变器公司。逆变器、储能系统、新能源投资开发三块业务协同，且公司在官方资料中反复强调全球服务网络、电网支撑、电化学与电力电子的组合能力。官方资料还显示其在 2026 年彭博新能源财经逆变器可融资性榜单中继续位列第一，说明品牌、交付和银行可融资性已形成真实行业壁垒。</td>
+        </tr>
+        <tr>
+          <th>Right People</th>
+          <td><span class="tag yes">偏是</span></td>
+          <td>公司为创始人/实控人主导，问财显示曹仁贤持股 30.46%。管理层近两年的外部表达基本聚焦主赛道，2025 年研发投入 41.75 亿元、研发人数 7625 人，占比约 40%；同时 2025 年提高分红力度，至少说明资本配置没有明显跑偏。这里给“偏是”而非满分，因为管理层优秀与否最终还要继续看周期低点时的订单质量、应收和库存控制，不是靠几次路演就能下结论。</td>
+        </tr>
+        <tr>
+          <th>Right Price</th>
+          <td><span class="tag watch">待观察</span></td>
+          <td>当前 2724 亿元市值对应 22.63 倍 TTM PE，站在龙头地位上不算离谱，但考虑到 2026Q1 已出现营收、利润同比下滑，市场实际上已经在预期后续修复和储能/AIDC 继续兑现。它不是明显高估，但也还没到“闭眼有安全边际”的位置。</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>五维度评分</h2>
+      <div class="grid grid-2">
+        <div>
+          <div class="score-row"><div>商业模式</div><div class="bar"><span style="width:82%;"></span></div><div>8.2</div></div>
+          <div class="score-row"><div>市场规模</div><div class="bar"><span style="width:85%;"></span></div><div>8.5</div></div>
+          <div class="score-row"><div>竞争壁垒</div><div class="bar"><span style="width:80%;"></span></div><div>8.0</div></div>
+          <div class="score-row"><div>企业文化</div><div class="bar"><span style="width:73%;"></span></div><div>7.3</div></div>
+          <div class="score-row"><div>估值</div><div class="bar"><span style="width:64%;"></span></div><div>6.4</div></div>
+        </div>
+        <div class="note">
+          <h3>评分解释</h3>
+          <ul>
+            <li>商业模式高分来自高 ROE、强现金流、设备+系统+服务的一体化能力，不是纯拼价格的零部件模式。</li>
+            <li>市场规模高，是因为光储仍在全球扩容，且公司已经明确布局 AIDC 电源，天花板还在抬高。</li>
+            <li>壁垒主要是品牌可融资性、海外渠道和服务网、技术积累，而不是绝对专利封锁。</li>
+            <li>企业文化评分不拉满，因为行业周期性强，仍需继续验证管理层在高增长和波动中的纪律性。</li>
+            <li>估值分数偏中等，不便宜但也未极端透支。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>核心依据</h2>
+      <div class="grid grid-2">
+        <div class="note">
+          <h3>1. 看懂生意本质</h3>
+          <p>阳光电源不是“吃光伏装机周期红利的单产品公司”，而是卖清洁电力转换效率、可靠性、并网能力和全生命周期服务的公司。逆变器和储能都不是一次性交付品，后面跟着的是方案设计、并网适配、运维、可融资性背书和全球交付能力。这决定了它虽然看起来是设备公司，但利润质量和壁垒强于很多普通制造业。</p>
+        </div>
+        <div class="note">
+          <h3>2. 商业模式与财务质量</h3>
+          <p>2025 年公司全年 ROE 32.24%，经营现金流 169.18 亿元，明显不是“账上赚钱、现金不赚钱”的生意。2026Q1 虽然同比承压，但毛利率 33.26% 仍然不低，说明公司不是简单以价换量。真正需要盯的是应收账款 224.26 亿元、存货 277.58 亿元的绝对规模，这会决定增长质量。</p>
+        </div>
+        <div class="note">
+          <h3>3. 市场规模与增长引擎</h3>
+          <p>公司官方披露的主赛道包括逆变器、储能、新能源投资开发，并新增 AIDC 电源布局。2026-03-31 投资者关系记录显示，公司认为 2026 年储能出货希望做到 60+GWh，AIDC 方向目标是年内小规模交付、次年起量。换句话说，市场给它估值，不只是看传统光伏，而是在给“储能全球化 + 新业务可选性”定价。</p>
+        </div>
+        <div class="note">
+          <h3>4. 竞争壁垒</h3>
+          <p>最硬的壁垒不是单一产品，而是品牌可融资性、全球渠道与服务能力。官方资料显示，公司在海外已建设 20 多家分支机构、60 多家代表处、520+ 服务网点；投资者关系材料显示其光伏逆变器可融资性全球第一、储能系统和 PCS 可融资性也居前。对海外大项目客户来说，这类“长期稳定运行 + 可融资”能力远比便宜几分钱更关键。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>估值情景</h2>
+      <table>
+        <tr>
+          <th>情景</th>
+          <th>假设</th>
+          <th>对应净利润</th>
+          <th>隐含 PE</th>
+          <th>判断</th>
+        </tr>
+        <tr>
+          <td>悲观</td>
+          <td>储能增速放缓，光伏价格竞争延续，AIDC 暂不贡献明显利润</td>
+          <td>110 亿元</td>
+          <td>24.8 倍</td>
+          <td>不便宜，安全边际一般</td>
+        </tr>
+        <tr>
+          <td>中性</td>
+          <td>储能维持较快增长，传统业务平稳，利润回到接近 2025 年水平</td>
+          <td>130 亿元</td>
+          <td>21.0 倍</td>
+          <td>合理偏中性</td>
+        </tr>
+        <tr>
+          <td>乐观</td>
+          <td>储能继续高增，海外订单兑现，AIDC 贡献新增估值想象</td>
+          <td>150 亿元</td>
+          <td>18.2 倍</td>
+          <td>会显得不贵，但要靠兑现</td>
+        </tr>
+      </table>
+      <div class="note" style="margin-top:14px;">
+        <h3>怎么看这张表</h3>
+        <p>当前价格不需要极端乐观才能成立，但也没有便宜到必须马上出手。懒一点的结论就是：如果你把它看成一家全球清洁能源电力电子龙头，20 倍出头 PE 不算离谱；如果你要求“很深的安全边际”，现在还差一点。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>核心风险</h2>
+      <table>
+        <tr><th>行业竞争</th><td>光伏和储能都还在价格竞争阶段，尤其国内低毛利项目若向海外传导，会压缩利润弹性。</td></tr>
+        <tr><th>周期与政策</th><td>海外贸易政策、汇率波动、电网建设节奏、储能并网规则都会影响订单确认与利润释放。2026Q1 财务费用大增，官方解释就包含汇率因素。</td></tr>
+        <tr><th>营运资本</th><td>应收账款和存货规模仍大，若行业转冷或客户质量变差，现金流与减值风险会先于利润表显现。</td></tr>
+        <tr><th>新业务兑现</th><td>AIDC 电源和 SST 目前更像可选项，不应过早按成熟业务估值；如果市场先炒预期、后看不到兑现，股价会承压。</td></tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>最终判断</h2>
+      <div class="grid grid-3">
+        <div class="decision">
+          <span class="tag yes">是否值得投资</span>
+          <strong>值得长期跟踪</strong>
+          <p>生意质量和行业地位都过关，不属于看不懂的公司。</p>
+        </div>
+        <div class="decision">
+          <span class="tag watch">安全边际</span>
+          <strong>中等</strong>
+          <p>不是明显高估，但也没便宜到足以忽略行业波动。</p>
+        </div>
+        <div class="decision">
+          <span class="tag watch">操作心法</span>
+          <strong>等确认，不抢跑</strong>
+          <p>看 2026 年中报、全年订单质量、应收/库存变化，再决定是不是从“好公司”升级成“好价格”。</p>
+        </div>
+      </div>
+      <div class="note" style="margin-top:14px;">
+        <h3>一句话结论</h3>
+        <p>阳光电源更像“可以长期放在雷达里的强公司”，而不是“现在就明显便宜”的强公司。Business 和 People 基本站得住，Price 还需要一点耐心。</p>
+      </div>
+    </section>
+
+    <section class="section sources">
+      <h2>来源</h2>
+      <ul>
+        <li>同花顺问财：查询问句包括 <span class="mono">阳光电源 300274.SZ 最新价 最新涨跌幅 成交额 换手率 总市值 市盈率TTM 市净率 股息率</span>、<span class="mono">阳光电源 300274.SZ 最新报告期 营业收入 归母净利润 ROE 毛利率 净利率 同比增速 经营现金流</span>、<span class="mono">阳光电源 300274.SZ 2025年营业收入 2025年归母净利润 2025年毛利率 2025年净利率 2025年ROE</span>、<span class="mono">阳光电源 300274.SZ 主力资金净流入</span>、<span class="mono">阳光电源 300274.SZ 近一年分红总额 股息率</span>、<span class="mono">光伏设备板块今日涨跌幅 主力资金净流入 板块排名</span> 等；拉取时间 2026-07-06 10:13 CST。</li>
+        <li>阳光电源 2025 年年度报告摘要（官方 PDF）：<a href="https://cn.sungrowpower.com/uploads/files/202604/2c4b6d5c6e1c13d8630e6f3c4148d01d.pdf">https://cn.sungrowpower.com/uploads/files/202604/2c4b6d5c6e1c13d8630e6f3c4148d01d.pdf</a></li>
+        <li>阳光电源 2026 年第一季度报告（巨潮资讯 PDF）：<a href="https://static.cninfo.com.cn/finalpage/2026-04-28/1225208062.PDF">https://static.cninfo.com.cn/finalpage/2026-04-28/1225208062.PDF</a></li>
+        <li>阳光电源投资者关系活动记录表（2026-03-31，巨潮资讯 PDF）：<a href="https://static.cninfo.com.cn/finalpage/2026-04-01/1225069456.PDF">https://static.cninfo.com.cn/finalpage/2026-04-01/1225069456.PDF</a></li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

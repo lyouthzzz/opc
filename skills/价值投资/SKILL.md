@@ -15,7 +15,7 @@ agent_created: true
 - **通用分析框架**（零公司耦合）：七步分析流程 + 方法论参考，适用于任何公司
 - **公司知识库**（用户私人沉淀）：`references/companies/` 下存放用户自己对各公司的深度理解，分析时按需加载作为参照。这是用户主动维护的知识积累，**不是每次分析的产物**——日常分析直接用通用框架完成即可，无需写入知识库。
 
-框架之外，本 skill 统一通过 **同花顺问财 skills** 获取市场现状数据：`hithink-market-query` 负责个股 / ETF / 指数行情、涨跌幅、成交量、资金流、技术指标，`hithink-industry-query` 负责行业估值 / 盈利 / 排名，`hithink-sector-selector` 负责板块筛选与板块资金流，`hithink-hkstock-selector` 负责港股筛选。问句改写规则、数据时效校验与边界处理见 `references/mcp-tool-guide.md`。
+框架之外，本 skill 统一通过 **同花顺问财 skills** 获取市场现状数据：`hithink-market-query` 负责个股 / ETF / 指数行情、涨跌幅、成交量、资金流、技术指标，`hithink-industry-query` 负责行业估值 / 盈利 / 排名，`hithink-sector-selector` 负责板块筛选与板块资金流，`hithink-hkstock-selector` 负责港股筛选。问句改写规则、数据时效校验与边界处理见 `references/market-data-guide.md`。
 
 ## 触发条件
 
@@ -30,7 +30,7 @@ agent_created: true
 
 ## 分析流程
 
-执行价值分析时，按以下七步顺序推进。每一步的详细方法论参见 `references/value-investing-framework.md`；市场现状分析所用的问财技能与问句模式参见 `references/mcp-tool-guide.md`。
+执行价值分析时，按以下七步顺序推进。每一步的详细方法论参见 `references/value-investing-framework.md`；市场现状分析所用的问财技能与问句模式参见 `references/market-data-guide.md`。
 
 分析前，可先检查公司知识库（见下文"公司知识库"章节）是否已有该公司的理解。若有则加载作为参照；若无，直接用通用框架独立分析即可——**分析本身不依赖知识库，也不产生知识库内容**。
 
@@ -59,7 +59,7 @@ agent_created: true
 
 知识库文件仅作定性参照，**不得**替代上述问财实时数据；加载知识库时须标注文件内 `数据截止` 字段，若早于最新报告期则提示「背景理解可能滞后，以问财为准」。
 
-详细问句模板与边界处理见 `references/mcp-tool-guide.md` 第二节「数据时效性校验」。
+详细问句模板与边界处理见 `references/market-data-guide.md` 第二节「数据时效性校验」。
 
 ### 第一步：看懂生意本质
 
@@ -72,7 +72,7 @@ agent_created: true
 
 ### 第二步：市场现状分析（同花顺问财支撑）
 
-在定性判断之前，先用 **同花顺问财 skills** 拉取该公司的市场现状数据，建立客观事实基础。个股 / 指数 / ETF 行情优先用 `hithink-market-query`，行业口径用 `hithink-industry-query`，板块口径用 `hithink-sector-selector`，港股筛选用 `hithink-hkstock-selector`。若问财未稳定返回某项关键字段，不要停在工具错误上，也不要静默切回其他数据源；直接记录缺失并在结论里降低把握度。参数、问句模式与边界处理详见 `references/mcp-tool-guide.md`。
+在定性判断之前，先用 **同花顺问财 skills** 拉取该公司的市场现状数据，建立客观事实基础。个股 / 指数 / ETF 行情优先用 `hithink-market-query`，行业口径用 `hithink-industry-query`，板块口径用 `hithink-sector-selector`，港股筛选用 `hithink-hkstock-selector`。若问财未稳定返回某项关键字段，不要停在工具错误上，也不要静默切回其他数据源；直接记录缺失并在结论里降低把握度。参数、问句模式与边界处理详见 `references/market-data-guide.md`。
 
 **前置条件**：已完成第零步，手头有「行情截止日」与「最新报告期」两个锚点；所有问句都应显式包含“最新”“今日”“当前”或具体时间窗，**禁止写死旧年份并假装是实时数据**。
 
@@ -195,7 +195,7 @@ agent_created: true
 - 用表格呈现市场快照、三要素判断、五维度评分、估值情景和核心风险
 - 图形优先用纯 HTML/CSS/inline SVG（如评分条、雷达图、风险矩阵），不要引入图表库
 - 所有行情、财报、公告、研报数据必须标注 `trade_date` / `period` / `ann_date` 与来源
-- 若 MCP 数据缺失或滞后，在 HTML 中用醒目的“数据限制”区块说明
+- 若市场数据缺失或滞后，在 HTML 中用醒目的“数据限制”区块说明
 
 HTML 报告必须包含以下结构化内容：
 
@@ -265,10 +265,9 @@ HTML 报告必须包含以下结构化内容：
 - "看懂生意"的方法论和判断标准
 - 投资分析报告输出模板
 
-### references/mcp-tool-guide.md
+### references/market-data-guide.md
 同花顺问财数据使用手册。第零步「数据时效性校验」与第二步「市场现状分析」的操作依据，包含：
 - **第二节 数据时效性校验**：分析基准日、最近交易日、最新报告期的锚定方法与返回校验清单
-- MCP 连接配置、Token/套餐说明、通用调用约定（`ts_code`/`period`/日期/`fields`）
 - 核心技能：`hithink-market-query`（行情/估值/资金流/技术指标）、`hithink-industry-query`（行业估值/盈利/排名）、`hithink-sector-selector`（板块筛选/资金流）、`hithink-hkstock-selector`（港股筛选）
 - A 股 / 港股 / 美股三套标准查询模式与错误处理
 
@@ -280,7 +279,7 @@ HTML 报告必须包含以下结构化内容：
 
 ## 核心原则
 
-- **数据以最新为准**：每次分析必须经 MCP 实时拉数并校验时效；禁止复用旧对话中的股价/财报数字，禁止未验证就写死 `period` 或 `trade_date`
+- **数据以最新为准**：每次分析必须实时拉数并校验时效；禁止复用旧对话中的股价/财报数字，禁止未验证就写死 `period` 或 `trade_date`
 - **充分阅读**：价值分析需要大量阅读公司资料（财报、访谈、研报）。"有几个发表各种观点的人是看过所有能找到的资料的？"
 - **第一性原理**：从本质出发，持续用理性和事实逼近本质，而非一锤定音
 - **长期视角**：投资买的是"未来的总量"（速度 × 时间），而非短期的"加速度"

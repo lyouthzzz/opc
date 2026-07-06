@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>科士达（002518.SZ）价值分析 | 2026-07-05</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --card: #fffdfa;
+      --ink: #1f2328;
+      --muted: #667085;
+      --line: #d9d2c3;
+      --accent: #9f5f2d;
+      --accent-soft: #f3e2d3;
+      --good: #1f7a4d;
+      --warn: #b76e00;
+      --bad: #a23636;
+      --shadow: 0 10px 30px rgba(42, 38, 30, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(159, 95, 45, 0.14), transparent 28%),
+        linear-gradient(180deg, #f7f3ec 0%, var(--bg) 100%);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 28px auto 56px;
+    }
+
+    .hero,
+    .section {
+      background: var(--card);
+      border: 1px solid rgba(159, 95, 45, 0.12);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(159, 95, 45, 0.18), transparent 70%);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+    h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .pill {
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: #faf5ef;
+      border: 1px solid var(--line);
+    }
+    .pill strong {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .pill span {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .banner {
+      border-left: 4px solid var(--warn);
+      background: #fff7e8;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid #ece6db;
+      vertical-align: top;
+    }
+    th {
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .judge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .yes { background: rgba(31, 122, 77, 0.12); color: var(--good); }
+    .watch { background: rgba(183, 110, 0, 0.12); color: var(--warn); }
+    .no { background: rgba(162, 54, 54, 0.12); color: var(--bad); }
+
+    .score {
+      display: grid;
+      gap: 12px;
+    }
+    .score-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 48px;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+    .bar {
+      height: 10px;
+      background: #eee6d8;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #d7a16b 0%, var(--accent) 100%);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mini {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fcfaf6;
+    }
+    .mini .k {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .mini .v {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+    li { margin: 6px 0; }
+    .muted { color: var(--muted); }
+    .small { font-size: 13px; }
+    .footnotes {
+      display: grid;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      background: #f2ece2;
+      padding: 1px 4px;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .summary,
+      .cards,
+      .grid-2 { grid-template-columns: 1fr; }
+      .score-row { grid-template-columns: 90px 1fr 44px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <p class="sub">价值投资分析 | 科士达 002518.SZ | 分析基准日 2026-07-05</p>
+      <h1>好生意的成分在，但眼下更像“好故事价格”，不是“安全边际价格”。</h1>
+      <p>
+        科士达的核心判断不是“有没有业务”，而是“市场已经提前把多少未来算进去了”。
+        数据中心电源是老本行，新能源在 2025 年恢复增长，AIDC 又给了额外想象力；但以 2026 年 7 月 3 日收盘价看，
+        估值已经明显站在增长预期一侧，容错率不高。
+      </p>
+      <div class="summary">
+        <div class="pill">
+          <strong>最终判断</strong>
+          <span>值得跟踪，不急着下手</span>
+        </div>
+        <div class="pill">
+          <strong>三要素</strong>
+          <span>Business 是 / People 待观察 / Price 否</span>
+        </div>
+        <div class="pill">
+          <strong>观察周期</strong>
+          <span>至少 1-2 个半年报</span>
+        </div>
+      </div>
+      <div class="banner">
+        数据限制：本次未拿到 skill 指定的同花顺问财数据，市场快照改用当前线程可用行情工具（TDX）与公开披露/公共行情页。
+        财报口径仍以公司公告为准；资金流、52 周区间、分析师目标价等第三方字段仅作为辅助，不作为硬结论。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>市场现状快照</h2>
+      <p class="sub">
+        数据时效：分析基准日 2026-07-05 | 行情截止 2026-07-03 15:33（TDX 行情快照） |
+        财报报告期 2026-03-31 | 拉取时间 2026-07-05 15:16 CST
+      </p>
+      <div class="grid-2">
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>项目</th>
+                <th>当前值</th>
+                <th>时间口径 / 来源</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>最新价 / 涨跌幅</td>
+                <td>47.80 元 / -2.59%</td>
+                <td><code>trade_date 2026-07-03</code> | TDX 行情快照</td>
+              </tr>
+              <tr>
+                <td>日内区间</td>
+                <td>47.71 - 50.12 元</td>
+                <td><code>trade_date 2026-07-03</code> | TDX / Investing</td>
+              </tr>
+              <tr>
+                <td>52 周区间</td>
+                <td>21.78 - 65.58 元</td>
+                <td><code>as_of 2026-07-05</code> | Yahoo / Investing</td>
+              </tr>
+              <tr>
+                <td>区间位置</td>
+                <td>约 59.4% 分位，较 52 周高点回撤 27.1%</td>
+                <td>根据公开行情区间计算</td>
+              </tr>
+              <tr>
+                <td>总市值</td>
+                <td>约 278.3 亿元</td>
+                <td><code>trade_date 2026-07-03</code> | TDX / Investing</td>
+              </tr>
+              <tr>
+                <td>市盈率 TTM</td>
+                <td>43.45 倍</td>
+                <td>股价 / TTM EPS 1.10 元，TTM EPS 由 2025A + 2026Q1 - 2025Q1 推算</td>
+              </tr>
+              <tr>
+                <td>市净率</td>
+                <td>5.59 倍</td>
+                <td>股价 / 2026Q1 每股净资产 8.546 元</td>
+              </tr>
+              <tr>
+                <td>股息率</td>
+                <td>约 0.94%</td>
+                <td>2025 年度分红 10 派 4.5 元 / 当前股价</td>
+              </tr>
+              <tr>
+                <td>换手率 / 成交额</td>
+                <td>2.73% / 7.54 亿元</td>
+                <td><code>trade_date 2026-07-03</code> | TDX</td>
+              </tr>
+              <tr>
+                <td>近 3 / 5 日主力资金</td>
+                <td>+2.07 亿元 / +4.81 亿元</td>
+                <td><code>as_of 2026-07-03</code> | 东方财富资金流向页快照</td>
+              </tr>
+              <tr>
+                <td>股东户数</td>
+                <td>4.7 万户</td>
+                <td><code>date 2026-06-18</code> | TDX F10 / 公司互动答复</td>
+              </tr>
+              <tr>
+                <td>融资余额</td>
+                <td>约 5.36 亿元</td>
+                <td><code>date 2026-07-02</code> | 东方财富 / 同花顺资讯快照</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="cards">
+            <div class="mini">
+              <div class="k">2026Q1 营收</div>
+              <div class="v">12.40 亿</div>
+              <div class="small muted">同比 +31.47%</div>
+            </div>
+            <div class="mini">
+              <div class="k">2026Q1 归母净利</div>
+              <div class="v">1.39 亿</div>
+              <div class="small muted">同比 +24.84%</div>
+            </div>
+            <div class="mini">
+              <div class="k">2026Q1 经营现金流</div>
+              <div class="v">1.13 亿</div>
+              <div class="small muted">上年同期为 -1.31 亿</div>
+            </div>
+          </div>
+          <div style="height:12px"></div>
+          <div class="cards">
+            <div class="mini">
+              <div class="k">2025 年营收</div>
+              <div class="v">52.70 亿</div>
+              <div class="small muted">同比 +26.72%</div>
+            </div>
+            <div class="mini">
+              <div class="k">2025 年归母净利</div>
+              <div class="v">6.11 亿</div>
+              <div class="small muted">同比 +54.97%</div>
+            </div>
+            <div class="mini">
+              <div class="k">2025 年经营现金流</div>
+              <div class="v">9.11 亿</div>
+              <div class="small muted">同比 +85.53%</div>
+            </div>
+          </div>
+          <div style="height:12px"></div>
+          <div class="mini">
+            <div class="k">大盘背景</div>
+            <div class="small">
+              上证指数 4043.64（+0.37%），沪深 300 指数 4842.17（+0.62%），
+              沪深两市成交额约 3.21 万亿元，全市场约 3804 只上涨、1628 只下跌。
+              AIDC 电源概念年内热度高，概念股平均涨幅显著跑赢上证指数。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>三要素判断</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>判断</th>
+            <th>核心理由</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Right Business</td>
+            <td><span class="judge yes">是</span></td>
+            <td>
+              本质上是做电力电子基础设施的老兵，不是单纯追热点的“AIDC 概念股”。
+              数据中心业务在 UPS、温控、微模块、电池、一体化供配电上有完整产品矩阵，
+              2025 年数据中心核心业务收入 29.55 亿元，同比增长 13.76%；新能源光储充收入 20.69 亿元，同比增长 52.01%。
+              老业务撑得住，新业务给弹性。
+            </td>
+          </tr>
+          <tr>
+            <td>Right People</td>
+            <td><span class="judge watch">待观察</span></td>
+            <td>
+              家族控制稳定，实控人控制力强；公司在股价异动公告里主动提示 AIDC、储能、液冷兑现不确定性，
+              这点比只讲故事要好。问题在于可验证的“资本配置优秀”证据还不够厚，且家族控制本身意味着治理要持续看执行。
+            </td>
+          </tr>
+          <tr>
+            <td>Right Price</td>
+            <td><span class="judge no">否</span></td>
+            <td>
+              2026 年 7 月 3 日股价对应 PE TTM 43.45 倍、PB 5.59 倍、股息率仅约 0.94%。
+              这不是烂公司估值，而是市场已经提前给了“数据中心升级 + 海外新能源恢复 + AIDC 新产品”的溢价。
+              如果成长兑现慢一点，估值缓冲就不够。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>五维度评分</h2>
+      <div class="grid-2">
+        <div class="score">
+          <div class="score-row">
+            <div>商业模式</div>
+            <div class="bar"><div class="fill" style="width:80%"></div></div>
+            <strong>8/10</strong>
+          </div>
+          <div class="score-row">
+            <div>市场规模</div>
+            <div class="bar"><div class="fill" style="width:80%"></div></div>
+            <strong>8/10</strong>
+          </div>
+          <div class="score-row">
+            <div>竞争壁垒</div>
+            <div class="bar"><div class="fill" style="width:70%"></div></div>
+            <strong>7/10</strong>
+          </div>
+          <div class="score-row">
+            <div>企业文化</div>
+            <div class="bar"><div class="fill" style="width:60%"></div></div>
+            <strong>6/10</strong>
+          </div>
+          <div class="score-row">
+            <div>估值</div>
+            <div class="bar"><div class="fill" style="width:40%"></div></div>
+            <strong>4/10</strong>
+          </div>
+        </div>
+        <div class="mini">
+          <div class="k">评分解释</div>
+          <ul class="small">
+            <li>商业模式高分来自“数据中心电源基础设施”这条主线足够硬，客户需求不是可有可无。</li>
+            <li>市场规模高分来自 AI 数据中心扩张、海外储能恢复、国产替代三条逻辑叠加。</li>
+            <li>壁垒不低，但还没到“独占性”级别，行业仍有价格竞争和技术迭代压力。</li>
+            <li>文化与管理层证据偏少，现阶段只能给中性偏正面。</li>
+            <li>估值分低，不是公司差，而是市场预期先跑太快。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>看懂生意：它到底是什么</h2>
+      <p>
+        科士达不是“纯储能股”，也不是“纯 AIDC 新概念股”。它的本体是
+        <strong>电力电子基础设施供应商</strong>，先在 UPS 和数据中心配电/温控里站住，再把同源技术延伸到光伏、储能、充电桩。
+      </p>
+      <div style="height:14px"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>问题</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>它解决什么需求</td>
+            <td>保障关键设备不断电、降能耗、提部署效率，属于“必须花的钱”，不是锦上添花。</td>
+          </tr>
+          <tr>
+            <td>赚钱核心</td>
+            <td>卖 UPS、温控、微模块、电池、电力模块、一体化系统，以及新能源逆变器、储能 PCS/系统、充电桩。</td>
+          </tr>
+          <tr>
+            <td>2025 年增长来源</td>
+            <td>一半来自数据中心主业稳步扩张，一半来自新能源业务在海外需求回暖下重回增长通道。</td>
+          </tr>
+          <tr>
+            <td>争议点</td>
+            <td>AIDC/HVDC/液冷到底能带来多大新增收入，目前更多还在验证和预期阶段，不是已经完全兑现的利润事实。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Right Business 细看</h2>
+      <div class="grid-2">
+        <div>
+          <h3>1. 商业模式</h3>
+          <ul>
+            <li>2025 年收入 52.70 亿元，归母净利 6.11 亿元，经营现金流 9.11 亿元，现金流质量明显优于只看利润表的公司。</li>
+            <li>2026Q1 收入继续同比 +31.47%，说明 2025 年增长不是一次性冲高后马上熄火。</li>
+            <li>Q1 应收账款 15.64 亿元、存货 11.11 亿元，说明这仍是典型工程/制造型生意，周转管理很重要。</li>
+            <li>负债不重，2026Q1 短期借款约 1.45 亿元、长期负债约 0.90 亿元，杠杆不是主要风险源。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>2. 市场规模与空间</h3>
+          <ul>
+            <li>数据中心行业受 AI 算力扩张拉动，国内互联网客户、运营商、金融和海外 ODM 都有空间。</li>
+            <li>新能源业务受欧洲储能回暖、中东/东南亚/非洲放量带动，2025 年恢复较快。</li>
+            <li>公司自己也在把“光储 + 数据中心”做组合方案，这条路如果跑通，客单价会比单一设备高。</li>
+          </ul>
+        </div>
+      </div>
+      <div style="height:14px"></div>
+      <div class="grid-2">
+        <div>
+          <h3>3. 护城河</h3>
+          <ul>
+            <li>三十多年积累、全产品线、客户认证周期长，这是传统 UPS/数据中心基础设施的天然门槛。</li>
+            <li>金融、通信、互联网、海外 ODM 同时在做，说明公司不是单客户单赛道。</li>
+            <li>但行业不是垄断型护城河，价格战、海外拓客、技术升级都会压利润。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>一句话</h3>
+          <p class="small">
+            这门生意能看懂，也确实有需求和技术积累；它的问题不在“有没有护城河”，而在“护城河够不够宽，能不能支撑现在的高估值”。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Right People 细看</h2>
+      <ul>
+        <li>公司 1993 年成立、2010 年上市，至少说明管理层不是新故事团队，业务沉淀够长。</li>
+        <li>2026 年 5 月股价异动公告里，公司明确提示 AIDC 建设进度、储能海外波动、液冷收入占比不足 1% 等风险，信息披露相对克制。</li>
+        <li>投资者交流里对数据中心毛利率、新能源低毛利、锂电渗透节奏等回答基本符合现实，没有把所有变量都说成确定性。</li>
+        <li>但能证明“管理层特别优秀”的证据还不够，比如长期回购、极强资本配置、逆周期大投入后兑现等，目前看不到非常突出样本。</li>
+        <li>家族控制能带来稳定，也会带来治理观察点，所以这里不给满分。</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Right Price：估值与安全边际</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>情景</th>
+            <th>归母净利假设</th>
+            <th>隐含逻辑</th>
+            <th>对应 PE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>悲观</td>
+            <td>6.11 亿元</td>
+            <td>2026 年利润基本与 2025 年持平，AIDC 兑现慢，新能源恢复有限</td>
+            <td>45.55 倍</td>
+          </tr>
+          <tr>
+            <td>中性</td>
+            <td>7.64 亿元</td>
+            <td>按 2026Q1 同比增速约 +25% 年化推演</td>
+            <td>36.43 倍</td>
+          </tr>
+          <tr>
+            <td>乐观</td>
+            <td>8.55 亿元</td>
+            <td>利润恢复到 2023 年高位附近，数据中心与新能源双双超预期</td>
+            <td>32.55 倍</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="height:14px"></div>
+      <ul>
+        <li>即便按乐观情景看，估值也不便宜，说明市场已经把一部分“未来几年会更好”预支了。</li>
+        <li>当前价格更像在买“成长兑现速度”，不是在买“低估回归”。</li>
+        <li>如果你按段永平/巴菲特那套，最缺的不是逻辑，而是价格上的安全垫。</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>四种好运：可持续性判断</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>好运类型</th>
+            <th>是否具备</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>第一种：随机运气</td>
+            <td>有</td>
+            <td>AIDC 主题热度、海外储能回暖、液冷概念都带有行业催化成分。</td>
+          </tr>
+          <tr>
+            <td>第二种：数量保质量</td>
+            <td>较强</td>
+            <td>产品线多、场景多、区域多，数据中心与新能源互相补充。</td>
+          </tr>
+          <tr>
+            <td>第三种：提升自身能力</td>
+            <td>较强</td>
+            <td>多年电力电子积累，产品从单机到系统集成，属于能力复用型扩张。</td>
+          </tr>
+          <tr>
+            <td>第四种：专家吸引力</td>
+            <td>中等</td>
+            <td>在 UPS/数据中心基础设施里有品牌和渠道，但在全球 AIDC 新供电形态里还要继续证明。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small muted" style="margin-top:12px;">
+        结论：它不是纯靠第一种运气活着的公司，所以能看；但第四种好运还没完全坐实，所以估值给太满时要小心。
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>核心风险</h2>
+      <ul>
+        <li><strong>AIDC 兑现风险：</strong>公司自己已提示，AIDC 建设节奏和订单落地速度存在不确定性；市场热度不等于利润立刻到表。</li>
+        <li><strong>新能源盈利波动：</strong>新能源板块 2025Q1 仍处低毛利区，公司也承认未来恢复要靠大客户修复、成本控制和海外需求回暖。</li>
+        <li><strong>估值回撤风险：</strong>当前估值对增长有要求，一旦半年报没有持续超预期，高估值先压缩。</li>
+        <li><strong>营运资本压力：</strong>应收与存货规模都不低，项目型交付放缓时会影响现金周转与利润弹性。</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>最终判断</h2>
+      <table>
+        <tbody>
+          <tr>
+            <th style="width:180px;">是否值得投资</th>
+            <td>值得长期跟踪，但按“right price”标准，当前更适合观察，不适合冲动买。</td>
+          </tr>
+          <tr>
+            <th>安全边际</th>
+            <td>偏弱。市场已经给了成长溢价，保护垫主要来自未来兑现，而不是当前低估。</td>
+          </tr>
+          <tr>
+            <th>建议观察周期</th>
+            <td>先看 2026 半年报和全年订单兑现，再看 AIDC/HVDC/液冷是否从概念走向收入占比。</td>
+          </tr>
+          <tr>
+            <th>持续性争议</th>
+            <td>大概率会持续 1-2 年：一边是“AI 基建大机会”，另一边是“订单节奏和估值太贵”。这类争议不会很快消失。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="banner" style="margin-top:16px;">
+        懒人版结论：科士达不是看不懂的票，甚至算得上能理解、业务也像样；但现在买，买到的更多是预期，不是便宜。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>来源与口径</h2>
+      <div class="footnotes">
+        <div>S1. TDX <code>symbol_info(002518, market=0)</code>：行情快照，时间 2026-07-03 15:33:12，含收盘价、成交额、换手率。</div>
+        <div>S2. TDX <code>stock_f10(002518, market=0)</code>：最新提示与财报汇总，更新日 2026-07-05，含 2026Q1 / 2025A EPS、每股净资产、分红、股东户数。</div>
+        <div>S3. 公司 2026 年第一季度报告：<code>period 2026-03-31</code>，来源巨潮资讯。</div>
+        <div>S4. 公司 2025 年年度报告摘要：<code>period 2025-12-31</code>，来源深交所披露平台。</div>
+        <div>S5. 公司投资者关系活动记录表：日期 2025-04-25，来源巨潮资讯。</div>
+        <div>S6. 公司关于股价异动的公告：公告日 2026-05-19，来源巨潮资讯。</div>
+        <div>S7. 公司官网：公司简介、员工/研发/专利规模，来源 <code>kstar.com.cn</code>。</div>
+        <div>S8. Investing / Yahoo / 富途：2026-07-03 收盘价补充、52 周区间、TTM EPS、分析师目标价等第三方行情页。</div>
+        <div>S9. 中证指数官网：上证指数、沪深 300 最新点位，时间 2026-07-03 15:00。</div>
+        <div>S10. 同花顺 / 搜狐 / 东方财富公开页面：A 股成交额、涨跌家数、个股资金流、融资余额等辅助行情字段。</div>
+        <div>S11. 本报告中 PE / PB / 股息率 / 区间分位 / 情景估值为基于上述公开数据的人工计算，属于分析推演，不是公司披露原值。</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

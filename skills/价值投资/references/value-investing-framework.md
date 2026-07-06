@@ -334,7 +334,7 @@
 <body>
   <header>
     <h1>[公司名称] 价值分析报告</h1>
-    <p>分析基准日 YYYY-MM-DD | 行情截止 YYYYMMDD | 财报报告期 YYYYMMDD | MCP 拉取 YYYY-MM-DD HH:MM</p>
+    <p>分析基准日 YYYY-MM-DD | 行情截止 YYYYMMDD | 财报报告期 YYYYMMDD | 数据拉取 YYYY-MM-DD HH:MM</p>
   </header>
 
   <main>
@@ -379,7 +379,7 @@
 
     <section id="limitations">
       <h2>数据限制</h2>
-      <!-- MCP 权限不足、数据滞后、关键缺失项必须在这里说明。 -->
+      <!-- 数据源受限、数据滞后、关键缺失项必须在这里说明。 -->
     </section>
   </main>
 </body>
