@@ -7,6 +7,15 @@ agent_created: true
 
 # 价值投资
 
+## 使用前置：双 Token 预检（必做）
+
+开始分析前，先确认以下两项都已就绪：
+
+- **通达信**：`TDX_API_KEY` 已在 shell profile 中配置，官方通达信 MCP 已连接，并通过 `tdx-api-key` 请求头读取该变量。Token 获取路径：<https://www.tdx.com.cn> → `AI平台` → `通达信MCP` → 购买后进入 `我的订单` → `会员中心` → `API Key管理` → `创建API Key` → `详情`。
+- **同花顺问财**：已安装 `announcement-search` skill，shell profile 中存在 `IWENCAI_BASE_URL=https://openapi.iwencai.com` 与 `IWENCAI_API_KEY`。API Key 获取路径：<https://www.iwencai.com/skillhub> → 登录 → 点击任意技能 → 在安装提示的 `Agent用户` 部分复制 Key。
+
+只检查变量是否存在以及工具能否完成最小只读调用，**不得打印、回显、记录或在回答中暴露 Token**。缺少任一项时，不开始数据查询；明确列出缺失项，引导用户重新运行仓库 README 的 Prompt 安装流程或在本地安全配置。不要要求用户把 Token 粘贴到聊天中。更新 profile 或 MCP 配置后，提示用户重启 / 重新加载 Agent 再继续。
+
 ## 概述
 
 本 skill 提供一套基于段永平/巴菲特价值投资理念的企业价值分析框架，核心是"right business, right people, right price"三要素判断，辅以五维度深度分析（商业模式、市场规模、竞争壁垒、企业文化、估值）。
