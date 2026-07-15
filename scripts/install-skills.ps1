@@ -5,6 +5,7 @@ param(
 
     [string]$Destination = '',
     [switch]$Force,
+    [switch]$NoForce,
     [switch]$DryRun,
     [switch]$NoCommands,
     [switch]$CommandsOnly,
@@ -12,8 +13,8 @@ param(
 )
 
 # Native Windows copy installer for this repository's skills and commands.
-# Existing different content is summarized in a dialog and backed up before
-# replacement. Tokens and external dependencies are intentionally out of scope.
+# Existing different content is replaced by default and backed up first.
+# Use NoForce only when automatic replacement is not wanted.
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -23,6 +24,9 @@ if ($env:OS -ne 'Windows_NT') {
 }
 if ($NoCommands -and $CommandsOnly) {
     throw 'NoCommands and CommandsOnly cannot be used together.'
+}
+if ($Force -and $NoForce) {
+    throw 'Force and NoForce cannot be used together.'
 }
 if ([string]::IsNullOrWhiteSpace($Target) -and [string]::IsNullOrWhiteSpace($Destination)) {
     throw 'Choose an Agent target or a custom skills destination.'
@@ -109,30 +113,6 @@ function Get-DifferenceSummary {
     }
 }
 
-function Confirm-Replacement {
-    param(
-        [Parameter(Mandatory = $true)][string]$DisplayName,
-        [Parameter(Mandatory = $true)][string]$Summary
-    )
-
-    if ($Force) {
-        return $true
-    }
-    if ($NonInteractive -or -not [System.Environment]::UserInteractive) {
-        return $false
-    }
-
-    Add-Type -AssemblyName System.Windows.Forms
-    $message = "A different copy of '$DisplayName' is already installed.`r`n`r`n$Summary.`r`n`r`nUpdate it now? The current copy will be backed up first."
-    $answer = [System.Windows.Forms.MessageBox]::Show(
-        $message,
-        'OPC installation update',
-        [System.Windows.Forms.MessageBoxButtons]::YesNo,
-        [System.Windows.Forms.MessageBoxIcon]::Question
-    )
-    return $answer -eq [System.Windows.Forms.DialogResult]::Yes
-}
-
 function Install-One {
     param(
         [Parameter(Mandatory = $true)][string]$Source,
@@ -150,10 +130,10 @@ function Install-One {
         }
 
         if ($DryRun) {
-            Write-Host "Would ask to update: $DisplayName ($($difference.Text))"
+            Write-Host "Would update: $DisplayName ($($difference.Text))"
             return
         }
-        if (-not (Confirm-Replacement -DisplayName $DisplayName -Summary $difference.Text)) {
+        if ($NoForce) {
             Write-Host "Skipped: $DisplayName ($($difference.Text))"
             $script:skippedCount++
             return
@@ -228,4 +208,3 @@ foreach ($destinationTarget in $targets) {
 }
 
 Write-Host "Installation summary: $installedCount installed, $currentCount current, $skippedCount skipped, $backupCount backed up."
-

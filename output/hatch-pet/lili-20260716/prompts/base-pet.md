@@ -1,0 +1,7 @@
+Create one clean full-body reference sprite for Codex pet 栗栗.
+
+Pet identity: A compact full-body chestnut coding cat mascot inspired by the reference photo mood and palette, not a human likeness: deep chocolate-brown fur with a soft long fringe between the ears, calm observant almond eyes, a snug attached burgundy scarf with thin cream stripes, and one cobalt-blue tail tip. Quietly focused, clever, warm, symmetrical markings, no handheld props, no text or logos..
+Style: Pet-safe sprite: compact full-body mascot, readable in a 192x208 cell, clear silhouette, simple face, stable palette/materials, and crisp edges for chroma-key extraction. Style `sticker`: Polished sticker mascot with bold clean shapes, crisp outline, flat colors, and minimal highlight detail. User style notes: Polished kawaii sticker-sprite with a subtle soft plush texture, clean dark-brown outline, simple readable shapes, compact upright body, large head, short limbs, expression calm and intelligent. Preserve exact palette and attached scarf across every row..
+
+
+Place a single centered pose on a perfectly flat pure user-selected #00FF00 chroma-key background. Keep the full pet visible, compact, readable at 192x208, and easy to animate. Preserve approved reference identity cues. No scenery, text, borders, checkerboard transparency, shadows, glows, detached effects, or extra props. Keep #00FF00 and close colors out of the pet, props, highlights, and effects.

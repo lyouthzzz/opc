@@ -8,8 +8,8 @@
 # 选项:
 #   -t, --target <name>   预设目标 agent，可选: claude | codex | cursor | workbuddy | agents | all
 #   -l, --link            使用软链接（symlink）而非复制（随仓库更新自动生效）
-#   -f, --force           覆盖已存在的同名 skill / command（--link 时默认开启）
-#       --no-force        软链接模式下仍跳过已存在项（覆盖 --link 的默认覆盖行为）
+#   -f, --force           覆盖已存在的同名 skill / command（默认行为，保留此参数以兼容旧用法）
+#       --no-force        已存在且不同时跳过，不执行覆盖
 #   -n, --dry-run         只打印将要执行的操作，不实际改动
 #       --no-commands     只装 skills，不装 /command 斜杠命令
 #       --commands-only   只装 /command 斜杠命令，不装 skills
@@ -37,7 +37,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SKILLS_SRC="$REPO_ROOT/skills"
 CMDS_SRC="$REPO_ROOT/commands"
 
-TARGET=""; DEST_DIR=""; USE_LINK=0; FORCE=0; NO_FORCE=0; DRY_RUN=0; DO_SKILLS=1; DO_COMMANDS=1
+TARGET=""; DEST_DIR=""; USE_LINK=0; FORCE=1; NO_FORCE=0; DRY_RUN=0; DO_SKILLS=1; DO_COMMANDS=1
 
 usage() { sed -n '2,40p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
@@ -45,8 +45,8 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     -t|--target) TARGET="${2:-}"; shift 2 ;;
     -l|--link)   USE_LINK=1; shift ;;
-    -f|--force)  FORCE=1; shift ;;
-    --no-force)  NO_FORCE=1; shift ;;
+    -f|--force)  FORCE=1; NO_FORCE=0; shift ;;
+    --no-force)  FORCE=0; NO_FORCE=1; shift ;;
     -n|--dry-run) DRY_RUN=1; shift ;;
     --no-commands) DO_COMMANDS=0; shift ;;
     --commands-only) DO_SKILLS=0; shift ;;
@@ -55,11 +55,6 @@ while [[ $# -gt 0 ]]; do
     *)           DEST_DIR="$1"; shift ;;
   esac
 done
-
-# 软链接用于开发迭代，默认覆盖已存在项（复制模式仍默认跳过）
-if [[ "$USE_LINK" == "1" && "$NO_FORCE" != "1" ]]; then
-  FORCE=1
-fi
 
 # 目标列表，元素格式: "标签|skills目录|commands目录"（commands 目录为空表示不装命令）
 TARGETS=()
@@ -89,14 +84,21 @@ run() { if [[ "$DRY_RUN" == "1" ]]; then printf '[dry-run]'; printf ' %q' "$@"; 
 
 # install_one <源目录或文件> <目标路径> <显示名>
 install_one() {
-  local src="$1" target_path="$2" name="$3"
+  local src="$1" target_path="$2" name="$3" action="安装"
   if [[ -e "$target_path" || -L "$target_path" ]]; then
-    if [[ "$FORCE" == "1" ]]; then run rm -rf "$target_path"
-    else echo "    跳过（已存在）: $name  —— 用 --force 覆盖"; SKIPPED=$((SKIPPED+1)); return; fi
+    if { [[ -d "$src" && -d "$target_path" ]] && diff -qr "$src" "$target_path" >/dev/null; } ||
+       { [[ -f "$src" && -f "$target_path" ]] && cmp -s "$src" "$target_path"; }; then
+      echo "    已是最新: $name"
+      CURRENT=$((CURRENT+1))
+      return
+    fi
+    if [[ "$FORCE" == "1" ]]; then run rm -rf "$target_path"; action="更新"
+    else echo "    跳过（已存在）: $name"; SKIPPED=$((SKIPPED+1)); return; fi
   fi
   if [[ "$USE_LINK" == "1" ]]; then run ln -s "$src" "$target_path"
   else run cp -R "$src" "$target_path"; fi
-  echo "    安装: $name"; INSTALLED=$((INSTALLED+1))
+  echo "    $action: $name"
+  if [[ "$action" == "更新" ]]; then UPDATED=$((UPDATED+1)); else INSTALLED=$((INSTALLED+1)); fi
 }
 
 echo "仓库: $REPO_ROOT"
@@ -104,7 +106,7 @@ echo "内容: $([[ $DO_SKILLS == 1 ]] && echo -n 'skills ')$([[ $DO_COMMANDS == 
 echo "模式: $([[ $USE_LINK == 1 ]] && echo 软链接 || echo 复制)$([[ $FORCE == 1 ]] && echo ' + 覆盖')$([[ $DRY_RUN == 1 ]] && echo ' (dry-run)')"
 echo
 
-INSTALLED=0; SKIPPED=0
+INSTALLED=0; UPDATED=0; CURRENT=0; SKIPPED=0
 for entry in "${TARGETS[@]}"; do
   IFS='|' read -r label skills_dest cmds_dest <<< "$entry"
   echo "==> [$label]"
@@ -134,4 +136,4 @@ for entry in "${TARGETS[@]}"; do
   echo
 done
 
-echo "完成：安装 $INSTALLED 个，跳过 $SKIPPED 个。"
+echo "完成：新装 $INSTALLED 个，更新 $UPDATED 个，已是最新 $CURRENT 个，跳过 $SKIPPED 个。"
