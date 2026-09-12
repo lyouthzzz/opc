@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>腾讯音乐（01698.HK / NYSE:TME）价值投资分析</title>
+  <style>
+    :root {
+      --bg: #eef3f8;
+      --card: #fbfdff;
+      --ink: #14233a;
+      --muted: #627187;
+      --line: #d5dfeb;
+      --blue: #2868b2;
+      --blue-soft: #e7f1fd;
+      --violet: #6950a8;
+      --good: #237451;
+      --watch: #a46b12;
+      --bad: #a23d45;
+      --shadow: 0 16px 44px rgba(32, 58, 89, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 88% 4%, rgba(105, 80, 168, 0.15), transparent 25%),
+        radial-gradient(circle at 8% 0%, rgba(40, 104, 178, 0.12), transparent 28%),
+        linear-gradient(180deg, #f7fafe 0%, var(--bg) 100%);
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+      line-height: 1.66;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 18px 60px; }
+    .hero, .section {
+      background: rgba(251, 253, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+    .hero { padding: 30px; margin-bottom: 18px; position: relative; overflow: hidden; }
+    .hero::after {
+      content: "TME";
+      position: absolute;
+      right: 26px;
+      top: 8px;
+      font-size: 92px;
+      font-weight: 800;
+      letter-spacing: -7px;
+      color: rgba(40, 104, 178, 0.06);
+      pointer-events: none;
+    }
+    .section { padding: 24px; margin-bottom: 18px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(30px, 4vw, 44px); line-height: 1.12; margin-bottom: 8px; }
+    h2 { font-size: 23px; margin-bottom: 14px; }
+    h3 { font-size: 17px; margin-bottom: 8px; }
+    .eyebrow { color: var(--blue); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .sub, .muted, .small { color: var(--muted); }
+    .sub { margin-bottom: 18px; font-size: 14px; }
+    .small { font-size: 12px; }
+    .lead { font-size: 18px; max-width: 880px; margin-bottom: 18px; }
+
+    .grid { display: grid; gap: 14px; }
+    .grid > *, .kpis > *, .table-wrap, .risk-matrix > div { min-width: 0; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-main { grid-template-columns: 1.18fr .82fr; }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .kpi, .card, .decision {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 15px;
+    }
+    .kpi { background: linear-gradient(180deg, #f7fbff 0%, #fff 100%); }
+    .kpi .k { color: var(--muted); font-size: 12px; }
+    .kpi .v { font-size: 25px; line-height: 1.25; font-weight: 760; margin: 4px 0; }
+    .decision { background: linear-gradient(180deg, #f3f8ff 0%, #fff 100%); }
+    .decision strong { display: block; font-size: 22px; margin-bottom: 6px; }
+    .decision .verdict { font-size: 27px; font-weight: 800; color: var(--blue); }
+
+    .pill, .tag, .source {
+      display: inline-block;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .pill { padding: 6px 10px; margin: 0 6px 8px 0; background: var(--blue-soft); color: #20558f; }
+    .tag { padding: 4px 9px; border: 1px solid; }
+    .source { padding: 2px 7px; background: #eef3f8; color: #526276; white-space: nowrap; }
+    .yes { color: var(--good); background: rgba(35, 116, 81, .08); border-color: rgba(35, 116, 81, .35); }
+    .watch { color: var(--watch); background: rgba(164, 107, 18, .08); border-color: rgba(164, 107, 18, .35); }
+    .no { color: var(--bad); background: rgba(162, 61, 69, .08); border-color: rgba(162, 61, 69, .35); }
+
+    .note, .limit, .thesis {
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid;
+      margin: 12px 0 0;
+    }
+    .note { background: #f5f8fb; border-color: #d6e0eb; }
+    .limit { background: #fff4f2; border-color: #efc9c4; }
+    .thesis { background: #f5f3ff; border-color: #d9d0f4; }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 10px 9px; border-bottom: 1px solid #e5ecf3; vertical-align: top; }
+    th { color: var(--muted); font-weight: 650; background: #f6f9fc; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    .score-row { display: grid; grid-template-columns: 108px 1fr 54px; gap: 10px; align-items: center; margin-bottom: 12px; }
+    .bar { height: 10px; border-radius: 999px; overflow: hidden; background: #e7edf4; }
+    .bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--blue), var(--violet)); }
+    .score { text-align: right; font-weight: 750; }
+
+    .risk-matrix { display: grid; grid-template-columns: 92px repeat(3, 1fr); gap: 6px; font-size: 12px; }
+    .risk-matrix > div { padding: 10px; border-radius: 10px; border: 1px solid var(--line); min-height: 52px; }
+    .axis { background: #f4f7fa; color: var(--muted); font-weight: 650; }
+    .r-low { background: #eef8f3; }
+    .r-mid { background: #fff8e8; }
+    .r-high { background: #fff0ee; }
+
+    ul, ol { margin: 8px 0 0; padding-left: 20px; }
+    li { margin-bottom: 7px; }
+    .tight li { margin-bottom: 4px; }
+    .sources { font-size: 13px; }
+    .sources li { margin-bottom: 10px; word-break: break-word; }
+    .footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 18px; }
+
+    @media (max-width: 860px) {
+      .grid-2, .grid-3, .grid-main, .kpis { grid-template-columns: 1fr; }
+      .hero, .section { padding: 19px; border-radius: 17px; }
+      .hero::after { display: none; }
+      h1, h2, h3, p, li, th, td { overflow-wrap: anywhere; }
+      .risk-matrix { grid-template-columns: 76px repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media print {
+      body { background: white; }
+      .wrap { max-width: none; padding: 0; }
+      .hero, .section { box-shadow: none; break-inside: avoid; }
+      a { color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="eyebrow">Right business · Right people · Right price</div>
+      <h1>腾讯音乐价值投资分析</h1>
+      <p class="sub">01698.HK / NYSE:TME｜分析基准日 2026-07-16｜报告生成 2026-07-16 23:07 CST</p>
+      <p class="lead"><strong>先说结论：</strong>核心音乐业务已经从“版权流量平台”进化为高现金转化的订阅与音乐 IP 运营平台，当前价格不贵；但喜马拉雅并购使资本配置、监管约束和整合回报成为新的核心变量。我的判断是<strong>值得进入重点跟踪与分批研究清单，当前具备中等安全边际，但还不是无需验证即可重仓的价格</strong>。</p>
+
+      <div class="grid grid-3">
+        <div class="decision">
+          <span class="tag yes">Right Business：是</span>
+          <strong>好生意，护城河在迁移</strong>
+          <p>规模、数据、腾讯生态和用户音乐资产仍强；独家版权已不再是可靠壁垒。</p>
+        </div>
+        <div class="decision">
+          <span class="tag watch">Right People：待观察</span>
+          <strong>执行力强，资本配置待验证</strong>
+          <p>盈利和现金流兑现优秀；控制权、KPI 透明度和喜马拉雅收购拉低确定性。</p>
+        </div>
+        <div class="decision">
+          <span class="tag yes">Right Price：是，但有条件</span>
+          <strong class="verdict">中等安全边际</strong>
+          <p>并购完全摊薄后约 10.9× 调整后 TTM PE，2025 所有者收益率约 8.5%。</p>
+        </div>
+      </div>
+
+      <div class="kpis" style="margin-top:14px">
+        <div class="kpi"><div class="k">港股收盘价</div><div class="v">HK$36.20</div><div class="small">trade_date 2026-07-16｜+4.50%</div></div>
+        <div class="kpi"><div class="k">通达信 PE TTM</div><div class="v">10.95×</div><div class="small">未计喜马拉雅潜在全部摊薄</div></div>
+        <div class="kpi"><div class="k">Q1 2026 毛利率</div><div class="v">44.9%</div><div class="small">同比 +0.8pct</div></div>
+        <div class="kpi"><div class="k">2025 所有者收益</div><div class="v">RMB 9.04B</div><div class="small">经营现金流－固定/无形资产购置</div></div>
+      </div>
+    </header>
+
+    <section class="section" id="market">
+      <h2>零、市场现状快照</h2>
+      <div class="note">
+        <strong>数据时效：</strong>分析基准日 2026-07-16｜行情截止 2026-07-16 港股收盘｜财报报告期 2026-03-31｜数据来源 通达信、腾讯音乐 IR、SEC、港交所、市场监管总局及网页行情工具｜检索时间 2026-07-16 23:07 CST
+      </div>
+
+      <h3 style="margin-top:18px">行情与估值</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>项目</th><th>数值</th><th>时间口径</th><th>来源 / 说明</th></tr></thead>
+          <tbody>
+            <tr><td>01698.HK 收盘价 / 涨跌</td><td>HK$36.20 / +4.50%</td><td>trade_date 2026-07-16</td><td><span class="source">通达信</span></td></tr>
+            <tr><td>NYSE:TME 盘中价</td><td>US$9.27</td><td>trade_time 2026-07-16 14:47 UTC</td><td><span class="source">网页行情</span> 1 ADS = 2 股 A 类普通股，跨市场价格基本一致</td></tr>
+            <tr><td>总市值（行情口径）</td><td>HK$113.95B</td><td>trade_date 2026-07-16</td><td><span class="source">通达信</span> 恰好接近 2025 年末 31.478 亿股 × 现价，可能尚未计足并购摊薄</td></tr>
+            <tr><td>并购后完全摊薄市值（估算）</td><td>HK$120.30B / RMB106.39B</td><td>以 2026-07-16 价格</td><td>在行情市值上加入喜马拉雅最多 1.7529 亿股；汇率用 6.898 RMB/USD、约 7.8 HKD/USD</td></tr>
+            <tr><td>PE TTM / PB MRQ / 股息率</td><td>10.95× / 1.35× / 2.58%</td><td>trade_date 2026-07-16</td><td><span class="source">通达信</span></td></tr>
+            <tr><td>近一年涨跌幅</td><td>-1.31%</td><td>2025-07-17 至 2026-07-15</td><td><span class="source">通达信</span></td></tr>
+            <tr><td>网易云音乐估值参照</td><td>HK$119.50；PE 8.09×；PB 1.82×</td><td>trade_date 2026-07-16</td><td><span class="source">通达信</span> 仅作同市场参照，利润口径未逐项重述</td></tr>
+            <tr><td>行业份额</td><td>网络音乐播放平台 45%—55%</td><td>period 2024</td><td><a href="https://www.samr.gov.cn/fldys/tzgg/ftj/art/2026/art_30fb31d419864948b9accee437c1b226.html">市场监管总局，ann_date 2026-05-12</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-top:18px">最新报告期核心指标</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>指标</th><th class="num">Q1 2026</th><th class="num">同比</th><th>解读</th></tr></thead>
+          <tbody>
+            <tr><td>总收入</td><td class="num">RMB7.895B</td><td class="num">+7.3%</td><td>较 2025 全年 15.8% 的增速明显放缓</td></tr>
+            <tr><td>音乐相关服务收入</td><td class="num">RMB6.514B</td><td class="num">+12.2%</td><td>占收入 82.5%，业务结构继续向音乐集中</td></tr>
+            <tr><td>会员收入</td><td class="num">RMB4.57B</td><td class="num">+6.6%</td><td>核心引擎降速，是当前最大经营观察点</td></tr>
+            <tr><td>非会员音乐相关收入</td><td class="num">RMB1.94B</td><td class="num">+28.0%</td><td>演出、广告、周边和 IP 业务形成第二增长曲线</td></tr>
+            <tr><td>社交娱乐及其他</td><td class="num">RMB1.381B</td><td class="num">-11.0%</td><td>旧业务继续收缩，但收入占比已降至 17.5%</td></tr>
+            <tr><td>毛利率</td><td class="num">44.9%</td><td class="num">+0.8pct</td><td>订阅占比、渠道费和收入分成改善带来经营杠杆</td></tr>
+            <tr><td>归母净利润 / 非 IFRS 归母</td><td class="num">RMB2.091B / 2.273B</td><td class="num">不可直接比 / +7.0%</td><td>上年同期含 RMB2.37B 投资处置收益，调整后口径更有意义</td></tr>
+            <tr><td>经营现金流</td><td class="num">RMB2.332B</td><td class="num">-7.4%</td><td>仍高于当期净利润，现金含金量好</td></tr>
+            <tr><td>现金、定存及短期投资</td><td class="num">RMB41.00B</td><td class="num">—</td><td>截至 2026-03-31，尚未扣除 4 月股息与 5 月并购现金</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small" style="margin-top:8px">period 2026-03-31｜ann_date 2026-05-12｜来源：<a href="https://ir.tencentmusic.com/2026-05-12-Tencent-Music-Entertainment-Group-Announces-First-Quarter-2026-Unaudited-Financial-Results">腾讯音乐 Q1 2026 业绩公告</a>。</p>
+
+      <div class="limit"><strong>市场数据限制：</strong>通达信未稳定返回 52 周高低点、南向持股和恒生科技指数口径；因此不提供伪精确的历史分位。当前市值也可能未完全反映喜马拉雅交易的最多 1.7529 亿股，报告估值统一采用更保守的完全摊薄口径。</div>
+    </section>
+
+    <section class="section" id="business-essence">
+      <h2>一、先看懂生意本质</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>它不是什么</h3>
+          <ul class="tight">
+            <li>不是单纯“卖版权”的中间商；独家音乐版权早在 2021 年已被监管拆除。</li>
+            <li>不是靠直播打赏的社交娱乐平台；该业务正在收缩且占比不断下降。</li>
+            <li>也不等同于 Spotify：中国付费率、腾讯生态、IP 周边、演出和车载渠道结构不同。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>它是什么</h3>
+          <p><strong>一句话：</strong>腾讯音乐是以 QQ 音乐、酷狗、酷我为入口，用海量用户数据、腾讯流量生态和内容运营能力，把音乐消费从“听歌”延伸到会员、广告、数字专辑、演出、周边和粉丝服务的中国音乐 IP 商业化平台。</p>
+        </div>
+      </div>
+      <div class="thesis">
+        <strong>真实需求：</strong>底层不是一个播放器功能，而是发现音乐、情绪陪伴、个人身份表达、粉丝归属和收藏资产。播放列表、收藏、推荐画像和会员权益构成转换成本；优质 IP、分发和商业化工具吸引版权方与艺人，形成双边网络效应。
+      </div>
+    </section>
+
+    <section class="section" id="history">
+      <h2>二、财务演进：模式质量正在变好</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>RMB 十亿元</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th>三年观察</th></tr></thead>
+          <tbody>
+            <tr><td>收入</td><td class="num">27.75</td><td class="num">28.40</td><td class="num">32.90</td><td>先完成直播业务出清，再恢复双位数增长</td></tr>
+            <tr><td>毛利率</td><td class="num">35.3%</td><td class="num">42.3%</td><td class="num">44.2%</td><td>两年提升 8.9pct，是价值创造最强证据</td></tr>
+            <tr><td>归母净利润</td><td class="num">4.92</td><td class="num">6.64</td><td class="num">11.06</td><td>2025 含 RMB2.37B 投资处置收益</td></tr>
+            <tr><td>非 IFRS 归母净利润</td><td class="num">约5.92</td><td class="num">7.67</td><td class="num">9.59</td><td>2024 +29.5%，2025 +25.0%</td></tr>
+            <tr><td>经营现金流</td><td class="num">7.34</td><td class="num">10.28</td><td class="num">10.23</td><td>长期接近或高于调整后利润</td></tr>
+            <tr><td>所有者收益估算</td><td class="num">6.72</td><td class="num">9.24</td><td class="num">9.04</td><td>OCF－购置固定资产－购置无形资产</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small" style="margin-top:8px">period 2023-12-31 / 2024-12-31 / 2025-12-31｜ann_date 2026-04-17｜来源：<a href="https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm">2025 Form 20-F</a>、<a href="https://ir.tencentmusic.com/2026-03-17-Tencent-Music-Entertainment-Group-Announces-Fourth-Quarter-and-Full-Year-2025-Unaudited-Financial-Results">FY2025 业绩公告</a>。所有者收益是分析估算，并非公司披露指标。</p>
+
+      <div class="grid grid-3" style="margin-top:15px">
+        <div class="card"><h3>利润含金量</h3><p>2025 经营现金流 RMB10.23B，扣除固定与无形资产购置后的估算所有者收益 RMB9.04B，现金转化优秀。</p></div>
+        <div class="card"><h3>资本回报</h3><p>2025 调整后利润除以平均归母权益约 12.9%。这是好水平但并非顶级，且并购后 goodwill 与股本增加可能继续压低 ROE。</p></div>
+        <div class="card"><h3>资产负债表</h3><p>Q1 末现金类资产 RMB41.0B，对比借款和票据约 RMB4.54B；但交割后机械估算净现金约降至 RMB25.2B。</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="right-business">
+      <h2>三、Right Business</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>商业模式：8.2 / 10</h3>
+          <ul class="tight">
+            <li>数字订阅边际成本低，付费、ARPPU 与毛利率可共同提升。</li>
+            <li>2025 会员收入 RMB17.66B，占总收入 53.7%；广告、演出和 IP 周边分散单一引擎风险。</li>
+            <li>内容版权仍需持续采购，线下演出与周边的毛利率也低于纯订阅。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>市场规模：6.7 / 10</h3>
+          <ul class="tight">
+            <li>Q4 2025 付费用户 1.274 亿，ARPPU RMB11.9，仍有分层会员和钱包份额提升空间。</li>
+            <li>MAU 同比下降 5%，监管材料也指出音乐与音频用户规模增长缓慢。</li>
+            <li>未来更多靠付费渗透、提价、广告、IP 和演出，而不是用户总量扩张。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>竞争壁垒：7.8 / 10</h3>
+          <ul class="tight">
+            <li>2024 年网络音乐播放平台份额 45%—55%，规模和用户数据优势明显。</li>
+            <li>腾讯社交、视频号、游戏、车载和广告生态提供低成本分发。</li>
+            <li>独家授权被监管禁止，护城河必须转向产品、推荐、音乐资产和 IP 运营能力。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note"><strong>核心变化：</strong>腾讯音乐真正值得买的逻辑，不再是“我有你没有的歌”，而是“同样的歌，我能以更低获客成本、更好推荐体验和更完整的粉丝消费链条赚到更多钱”。如果毛利率和用户生命周期价值不再提升，原来的护城河叙事就要降级。</div>
+    </section>
+
+    <section class="section" id="right-people">
+      <h2>四、Right People：经营执行合格，少数股东视角仍需打折</h2>
+      <div class="grid grid-main">
+        <div>
+          <div class="card">
+            <h3>正面证据</h3>
+            <ul>
+              <li>管理层稳定且长期深耕腾讯音乐业务：执行主席 Cussion Pang 自 2014 年起任董事，CEO Ross Liang 2003 年加入腾讯并曾负责 QQ 音乐。<a href="https://ir.tencentmusic.com/management-team">管理层资料</a></li>
+              <li>从 2021 年监管整改后，主动把增长重心从直播打赏转到音乐订阅，2023—2025 毛利率与调整后利润持续兑现。</li>
+              <li>股东回报逐步制度化：2025 年度股息 US$370M，较上一年度继续提升；过去两轮回购计划也完成了大部分授权。</li>
+            </ul>
+          </div>
+          <div class="card" style="margin-top:12px">
+            <h3>需要保留的疑问</h3>
+            <ul>
+              <li>截至 2026-03-31，腾讯持有约 93.6% 投票权，公司属于 NYSE “controlled company”；普通股东难以影响重大资本配置。</li>
+              <li>自 Q1 2026 起不再按季披露音乐 MAU、付费用户和 ARPPU，只在年末披露总付费用户，透明度下降。</li>
+              <li>2025 新回购计划授权 US$1B，但 2025 年尚未动用；同期又以现金加股份完成喜马拉雅大型收购，机会成本很高。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="decision">
+          <span class="tag watch">结论：待观察</span>
+          <strong>企业文化评分 6.6 / 10</strong>
+          <p>从“做对的事”看，业务转型与利润质量已经得到证明；从“站在少数股东一边”看，喜马拉雅收购回报、KPI 透明度和高投票权集中仍缺少足够证据。</p>
+          <hr style="border:0;border-top:1px solid var(--line);margin:16px 0">
+          <p class="small">资本配置事实来源：<a href="https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm">2025 Form 20-F</a>。2023/2024/2025 年分别回购约 US$175M / 261M / 64M；截至 2025 年末，2025 新计划尚未回购。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ximalaya">
+      <h2>五、喜马拉雅并购：便宜估值背后的最大变量</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>交易事实</h3>
+          <ul>
+            <li>2026-05-18 完成交割，喜马拉雅成为全资子公司。</li>
+            <li>对价最多为 US$1.26B 现金，加最多 1.7529 亿股腾讯音乐 A 类普通股。</li>
+            <li>按 2026-07-16 股价机械估算，股份部分约 HK$6.35B；交易显著消耗净现金并摊薄约 5% 股本。</li>
+          </ul>
+          <p class="small">来源：<a href="https://www.sec.gov/Archives/edgar/data/1744676/000095010326007307/dp246808_6k.htm">SEC 6-K，ann_date 2026-05-18</a>。</p>
+        </div>
+        <div class="card">
+          <h3>战略收益与限制</h3>
+          <ul>
+            <li>收益：长音频补齐内容类型，联合份额、车载入口、广告与订阅交叉销售均有协同可能。</li>
+            <li>监管确认交易后实体在在线音频与网络音乐市场均居领先，规模壁垒进一步增强。</li>
+            <li>但监管附加五项限制：不得提价或降服务、不得减少免费内容、解除独家授权、不得向车企搭售、不得限制主播多平台分发。</li>
+          </ul>
+          <p class="small">来源：<a href="https://www.samr.gov.cn/xw/zj/art/2026/art_c1b14339020e464fb46aa655a720ba48.html">市场监管总局，ann_date 2026-05-12</a>。</p>
+        </div>
+      </div>
+      <div class="limit"><strong>关键不确定性：</strong>截至本报告检索日，公司尚未在已发布的合并报表中展示喜马拉雅交割后的收入、利润、现金流、商誉和整合成本。任何把喜马拉雅协同直接计入估值的做法都过早；报告基准情景只给有限贡献，悲观情景按零贡献并考虑拖累。</div>
+    </section>
+
+    <section class="section" id="right-price">
+      <h2>六、Right Price：便宜，但不是无风险的便宜</h2>
+      <h3>1. 一眼胖瘦与标准化估值</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>项目</th><th class="num">估算值</th><th>算法 / 口径</th></tr></thead>
+          <tbody>
+            <tr><td>完全摊薄市值</td><td class="num">RMB106.39B</td><td>行情市值 + 喜马拉雅最多发行股份，按近似汇率折算</td></tr>
+            <tr><td>调整后 TTM 归母利润</td><td class="num">RMB9.74B</td><td>FY2025 9.588－Q1 2025 2.124＋Q1 2026 2.273</td></tr>
+            <tr><td>标准化 IFRS TTM 利润</td><td class="num">RMB8.86B</td><td>FY2025 11.056－Q1 2025 4.291＋Q1 2026 2.091，自动剔除处置收益所在季度</td></tr>
+            <tr><td>完全摊薄 PE</td><td class="num">10.9× / 12.0×</td><td>分别对应调整后 / 标准化 IFRS 利润</td></tr>
+            <tr><td>2025 所有者收益率</td><td class="num">8.5%</td><td>RMB9.04B / 完全摊薄市值</td></tr>
+            <tr><td>交割后净现金机械估算</td><td class="num">约RMB25.2B</td><td>Q1 现金类资产－借款/票据－已付股息－收购现金；未计喜马拉雅净资产与 Q2 现金流</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-top:18px">2. “撇去爆款”压力测试</h3>
+      <div class="note">腾讯音乐没有单一爆款产品，适合把“会员增长 + 喜马拉雅协同”整体视作增长引擎。假设<strong>喜马拉雅零利润贡献、音乐会员不再增长、核心利润较当前 TTM 下滑 15%</strong>，压力利润约 RMB8.3B；完全摊薄后 PE 约 <strong>12.8×</strong>。这个价格不算极端便宜，但仍未隐含高增长。</div>
+
+      <h3 style="margin-top:18px">3. 多情景估值（不是目标价承诺）</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>情景</th><th>标准化利润</th><th>估值倍数</th><th class="num">权益价值</th><th class="num">每股港币</th><th>隐含前提</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag no">悲观</span></td><td>RMB8.0B</td><td>10×</td><td class="num">RMB80B</td><td class="num">约HK$27</td><td>会员降速、竞争促销、喜马拉雅拖累且无协同</td></tr>
+            <tr><td><span class="tag watch">中性</span></td><td>RMB10.5B</td><td>14×</td><td class="num">RMB147B</td><td class="num">约HK$50</td><td>核心利润低双位数增长，喜马拉雅小幅正贡献</td></tr>
+            <tr><td><span class="tag yes">乐观</span></td><td>RMB12.5B</td><td>17×</td><td class="num">RMB212.5B</td><td class="num">约HK$72</td><td>SVIP、IP 商业化与长音频协同兑现，增速重新抬升</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small" style="margin-top:8px">换算假设：完全摊薄普通股约 33.231 亿股；1 RMB ≈ 1.131 HKD。情景没有概率加权，也不包含未来回购对每股价值的增厚。</p>
+
+      <div class="grid grid-3" style="margin-top:15px">
+        <div class="decision"><span class="tag yes">≤ HK$30</span><strong>高安全边际区</strong><p>前提是核心音乐利润与毛利率没有结构性恶化。</p></div>
+        <div class="decision"><span class="tag watch">HK$30—40</span><strong>中等安全边际区</strong><p>当前 HK$36.20 位于此区间，适合分批而非一次性押注。</p></div>
+        <div class="decision"><span class="tag no">≥ HK$55</span><strong>需要更多兑现</strong><p>需要喜马拉雅协同和双位数利润增长来支撑。</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="durability">
+      <h2>七、可持续性：四种好运</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>类型</th><th>腾讯音乐对应能力</th><th>判断</th></tr></thead>
+          <tbody>
+            <tr><td>第一种：随机好运</td><td>爆款歌曲、明星事件、热门影视 OST、演唱会周期</td><td>存在，但不应成为估值核心</td></tr>
+            <tr><td>第二种：数量保质量</td><td>海量曲库、多 App 入口、自制/合作内容、演出与周边矩阵</td><td><span class="tag yes">已具备</span></td></tr>
+            <tr><td>第三种：提升能力</td><td>推荐算法、内容运营、SVIP 分层、广告与 IP 全链条商业化</td><td><span class="tag yes">已具备</span></td></tr>
+            <tr><td>第四种：专家吸引力</td><td>领先份额吸引厂牌、艺人和品牌；腾讯生态放大分发</td><td><span class="tag watch">部分具备</span> 独家授权受监管限制</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:12px"><strong>综合：</strong>可持续性约 7.5/10。成功已不依赖单个爆款，但“黑洞效应”受到反垄断条件限制，未来更考验产品与运营，而不是资源排他。</p>
+    </section>
+
+    <section class="section" id="scores-risks">
+      <h2>八、五维评分与核心风险</h2>
+      <div class="grid grid-main">
+        <div class="card">
+          <div class="score-row"><div>商业模式</div><div class="bar"><span style="width:82%"></span></div><div class="score">8.2</div></div>
+          <div class="score-row"><div>市场规模</div><div class="bar"><span style="width:67%"></span></div><div class="score">6.7</div></div>
+          <div class="score-row"><div>竞争壁垒</div><div class="bar"><span style="width:78%"></span></div><div class="score">7.8</div></div>
+          <div class="score-row"><div>企业文化</div><div class="bar"><span style="width:66%"></span></div><div class="score">6.6</div></div>
+          <div class="score-row"><div>估值</div><div class="bar"><span style="width:82%"></span></div><div class="score">8.2</div></div>
+          <p class="small">简单平均 7.5 / 10。文化评分包含少数股东治理与资本配置折价。</p>
+        </div>
+        <div>
+          <div class="risk-matrix">
+            <div class="axis">概率 / 影响</div><div class="axis">中</div><div class="axis">中高</div><div class="axis">高</div>
+            <div class="axis">高概率</div><div class="r-mid">短视频争夺时长</div><div class="r-high">会员增速继续下行</div><div class="r-high">喜马拉雅整合低于预期</div>
+            <div class="axis">中概率</div><div class="r-mid">内容成本反弹</div><div class="r-high">免费/提价约束压利润</div><div class="r-high">监管与控制权折价</div>
+            <div class="axis">低概率</div><div class="r-low">汇率波动</div><div class="r-mid">版权诉讼</div><div class="r-high">VIE / 上市地尾部风险</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-3" style="margin-top:15px">
+        <div class="card"><h3>风险 1：会员量价失速</h3><p>Q1 会员收入增速降至 6.6%，且公司停止按季披露 MAU、付费用户与 ARPPU。若靠促销维持用户，毛利率可能见顶。</p></div>
+        <div class="card"><h3>风险 2：并购回报不足</h3><p>交易既耗现金又稀释股本，且五项监管约束削弱提价、独家内容与车载搭售协同。商誉减值是中期尾部风险。</p></div>
+        <div class="card"><h3>风险 3：治理与监管</h3><p>腾讯拥有约 93.6% 投票权；VIE、内容监管、反垄断与美股规则变化都可能带来长期估值折价。</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="final">
+      <h2>九、最终判断与跟踪清单</h2>
+      <div class="grid grid-2">
+        <div class="decision">
+          <span class="tag yes">是否值得投资：有条件地是</span>
+          <strong>当前更像“好生意遇到并购验证期”</strong>
+          <p>如果你认可中国数字音乐付费仍能缓慢提升，也相信腾讯生态能把内容 IP 做成多层次消费，HK$36.20 已经给出不错的盈利收益率。更合适的动作是分批、保留加仓弹药，并用交割后报表验证，而不是只凭 10 倍 PE 一次性重仓。</p>
+        </div>
+        <div class="decision">
+          <span class="tag watch">观察周期：3—5 年</span>
+          <strong>争议至少持续 2—3 年</strong>
+          <p>未来 2—3 个季度先看并购后第一份完整合并报表；真正判断喜马拉雅协同、会员天花板与资本回报，需要 3—5 年。长期持有逻辑则应按五年十年检验。</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:18px">接下来只盯这六件事</h3>
+      <ol>
+        <li><strong>核心音乐收入：</strong>会员收入能否回到 8%—10% 以上，非会员音乐业务高增长是否有利润。</li>
+        <li><strong>毛利率：</strong>并表后能否稳定在 43% 以上；若持续跌破 40%，需重估商业模式。</li>
+        <li><strong>调整后利润与现金流：</strong>年度调整后利润是否保持正增长，经营现金流是否继续覆盖利润。</li>
+        <li><strong>喜马拉雅：</strong>收入、利润、商誉、整合成本和监管承诺的实际影响是否单独披露。</li>
+        <li><strong>股本与净现金：</strong>并购摊薄实际数量、回购是否重启、净现金何时恢复。</li>
+        <li><strong>年度付费用户：</strong>即使季度 KPI 不再披露，年末总付费用户与钱包份额不能停滞。</li>
+      </ol>
+
+      <div class="limit"><strong>推翻投资逻辑的信号：</strong>核心音乐利润连续两年下降；并购后出现持续亏损或重大商誉减值；毛利率因价格战和内容成本连续下行；在现金下降的同时仍大规模摊薄且不回购；监管限制实质切断腾讯生态协同。</div>
+    </section>
+
+    <section class="section" id="limitations">
+      <h2>数据限制与方法说明</h2>
+      <ul>
+        <li>喜马拉雅于 2026-05-18 才交割，最新 Q1 财报不含交割后经营结果；交割后净现金、市值与估值均为机械估算。</li>
+        <li>完全摊薄计算按公告“最多”发行 1.7529 亿股处理，实际即时发行、股权奖励归属与交易调整可能低于该上限。</li>
+        <li>非 IFRS 利润剔除股权激励、收购无形资产摊销及投资损益，报告同时给出标准化 IFRS 口径，避免只看调整后指标。</li>
+        <li>情景估值是用于反推市场预期的框架，不是确定目标价；交易成本、税务、汇率与个人组合约束未纳入。</li>
+        <li>本报告为研究记录，不构成投资建议或收益承诺。</li>
+      </ul>
+    </section>
+
+    <section class="section sources" id="sources">
+      <h2>主要来源</h2>
+      <ol>
+        <li><a href="https://ir.tencentmusic.com/2026-05-12-Tencent-Music-Entertainment-Group-Announces-First-Quarter-2026-Unaudited-Financial-Results">Tencent Music Q1 2026 Results</a>｜period 2026-03-31｜ann_date 2026-05-12。</li>
+        <li><a href="https://ir.tencentmusic.com/2026-03-17-Tencent-Music-Entertainment-Group-Announces-Fourth-Quarter-and-Full-Year-2025-Unaudited-Financial-Results">Tencent Music Q4 and FY2025 Results</a>｜period 2025-12-31｜ann_date 2026-03-17。</li>
+        <li><a href="https://www.sec.gov/Archives/edgar/data/1744676/000119312526160257/tme-20251231.htm">Tencent Music 2025 Form 20-F</a>｜period 2025-12-31｜filed 2026-04-17。</li>
+        <li><a href="https://www.sec.gov/Archives/edgar/data/1744676/000095010326007307/dp246808_6k.htm">Completion of Acquisition of Ximalaya</a>｜ann_date 2026-05-18。</li>
+        <li><a href="https://www.hkexnews.hk/listedco/listconews/sehk/2025/0610/2025061000939.pdf">Proposed Acquisition of Ximalaya</a>｜ann_date 2025-06-10。</li>
+        <li><a href="https://www.samr.gov.cn/fldys/tzgg/ftj/art/2026/art_30fb31d419864948b9accee437c1b226.html">市场监管总局附条件批准决定</a>｜ann_date 2026-05-12。</li>
+        <li><a href="https://ir.tencentmusic.com/management-team">腾讯音乐管理团队</a>｜retrieved 2026-07-16。</li>
+        <li>通达信问小达结构化行情｜trade_date 2026-07-16｜检索 2026-07-16；用于 01698.HK 与 09899.HK 的价格、估值和近一年涨跌。</li>
+      </ol>
+    </section>
+
+    <div class="footer">价值投资框架：Right Business × Right People × Right Price｜数据先于观点，风险先于精确目标价</div>
+  </div>
+</body>
+</html>
